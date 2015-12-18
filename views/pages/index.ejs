@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="appChaplist" lang="en">
+   <head>
+      <% include ../partials/head.ejs %>
+   </head>
+
+    <body ng-controller="ctrlHome">
+      <header>
+         <% include ../partials/header %>
+      </header>
+
+      <div class="container col-md-8 col-md-offset-2">
+        <ui-view></ui-view>
+        <main>
+           <div class="jumbotron">
+             <div class="container">
+                <div class="jumbotron text-center">
+                   <h1><span class="fa fa-lock"></span> ChapList Authentication API</h1>
+                   <p>Login or Register with:</p>
+                   <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
+                </div>
+             </div>
+           </div>
+        </main>
+      </div>
+      <footer>
+       <% include ../partials/footer.ejs %>
+      </footer>
+    </body>
+</html>

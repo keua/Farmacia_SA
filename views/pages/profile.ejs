@@ -1,0 +1,62 @@
+
+
+<!DOCTYPE html>
+<html ng-app ="appChaplist"lang="en">
+   <head>
+      <% include ../partials/head %>
+   </head>
+   <body ng-controller="ctrlUser">
+      <header>
+         <% include ../partials/header %>
+      </header>
+      <main>
+         <div class="row">
+            <div class="col-sm-8">
+               <div class="jumbotron">
+                  <div class="container">
+                     <div class="page-header text-center">
+                        <h1><span class="fa fa-anchor"></span> Create aplication </h1>
+                        <div class="row">
+						  <div class="span9">
+						    <form class="navbar-form navbar-center">
+					          <div class="form-group">
+					            <input type="text" placeholder="<%- "Name" %>" class="form-control"><br>
+					            <input type="text" placeholder="<%- "PackageName" %>" class="form-control"><br>
+					            <input type="text" placeholder="<%- "HashKey" %>" class="form-control"><br>
+					            <button type="submit" class="btn btn-success"><%- "Save" %></button>
+					          </div>
+					        </form>
+						  </div>
+						</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="well">
+                  <h1><span class="fa fa-anchor"></span> User Information</h1>
+                  <div class="row" align="center">
+                     <!-- GOOGLE INFORMATION -->
+                     <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google</h3>
+                     <p>
+                        <img src =<%= user._json.picture %> alt="HTML5 Icon" class="avatar" style="width:128px;height:128px;"><br><br>
+                        <!-- <strong>id</strong>: <%= user.id %><br> -->
+                        <strong>name</strong>: <%= user.displayName %><br>
+                        <strong>email</strong>: <%= user.emails[0].value %><br><br>
+                        <a href="/logout" class="btn btn-danger"><span class="fa fa-google-plus"></span> Logout</a>
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+           <div >
+               {{user}}
+           </div>
+         <button class="btn btn-danger btn-sm" ng-click="hola()">Eliminar</button>
+      </main>
+      <footer>
+         <% include ../partials/footer %>
+      </footer>
+   </body>
+</html>

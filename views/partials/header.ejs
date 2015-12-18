@@ -1,0 +1,11 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+
+        <ul class="nav navbar-nav">
+            
+            <% if (user) { %><li><a href="/profile">Home</a></li><% } else { %><li><a href="/">Home</a></li><% } %>
+            <% if (user) { %><li><a href="/apps">Apps</a></li><% } else { }%>
+        </ul>
+
+    </div>
+</nav>
