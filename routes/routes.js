@@ -6,10 +6,14 @@ var controllers = require('../app/controllers');
     GET home page.
     Redirecciona a la página index.ejs dentro de la carpeta views
 */
-app.get('/', function(req, res, next) {
-  res.render('pages/index', { user: null });
+app.get('/', function (req, res, next) {
+    res.render('pages/index', {
+        user: null
+    });
 });
-
+/*
+    Client
+*/
 app.get('/Client/:nit', controllers.client.getClient);
 
 app.post('/Client', controllers.client.createClient);
@@ -18,11 +22,33 @@ app.delete('/Client/:id', controllers.client.deleteClient);
 
 app.put('/Client/:id', controllers.client.updateClient);
 
-app.get('/Animal/:id', controllers.animal.getAnimalAll);
+/*
+    Medicine
+*/
+app.post('/Medicine', controllers.medicine.createMedicine);
 
-app.post('/Animal', controllers.animal.createAnimal);
+app.delete('/Medicine/:id', controllers.medicine.deleteMedicine);
 
-app.delete('/Animal/:id/:pet', controllers.animal.deleteAnimal);
+app.put('/Medicine/:id', controllers.medicine.updateMedicine);
+
+/*
+    Drugstore
+*/
+app.get('/Drugstore/:id', controllers.drugstore.getDrugstore);
+
+app.post('/Drugstore', controllers.drugstore.createDrugstore);
+
+app.delete('/Drugstore/:id', controllers.drugstore.deleteDrugstore);
+
+app.put('/Drugstore/:id', controllers.drugstore.updateDrugstore);
+
+/*
+    Drugstore and Medicines
+*/
+app.post('/DrugstoreMedicine', controllers.drugstore_medicine.addMedicine);
+
+app.get('/DrugstoreMedicine/:id', controllers.drugstore_medicine.getDrugstoreMedicine);
+
 //*******************************************************************************
 //*******************************************************************************
 //*******************************************************************************
@@ -30,9 +56,9 @@ app.delete('/Animal/:id/:pet', controllers.animal.deleteAnimal);
     GET /profile
     de momento solo envía el usuario a la pantalla principal
 */
-app.get('/profile', isLoggedIn, function(req, res, next) {
+app.get('/profile', isLoggedIn, function (req, res, next) {
     res.render('pages/profile', {
-        user : req.user // get the user out of session and pass to template
+        user: req.user // get the user out of session and pass to template
     });
 })
 
@@ -40,13 +66,13 @@ app.get('/profile', isLoggedIn, function(req, res, next) {
     GET /profile
     de momento solo envía el usuario a la pantalla principal
 */
-app.get('/apps', isLoggedIn, function(req, res, next) {
+app.get('/apps', isLoggedIn, function (req, res, next) {
     res.render('pages/apps', {
-        user : req.user // get the user out of session and pass to template
+        user: req.user // get the user out of session and pass to template
     });
 })
 
-app.get('/user', isLoggedIn, function(req, res, next) {
+app.get('/user', isLoggedIn, function (req, res, next) {
     res.send(req.user);
 })
 
@@ -60,7 +86,7 @@ app.get('/auth/google',
     passport.authenticate('google', {
         scope: ['profile', 'email']
     }),
-    function(req, res) {
+    function (req, res) {
         // The request will be redirected to Google for authentication, so this
         // function will not be called.
     });
@@ -75,7 +101,7 @@ app.get('/oauth2callback',
     passport.authenticate('google', {
         failureRedirect: '/login'
     }),
-    function(req, res) {
+    function (req, res) {
         res.redirect('/profile');
     });
 
@@ -84,7 +110,7 @@ app.get('/oauth2callback',
     Utiliza passport.js para utilizar la función logout
     de la petición, por ende pone al atributo user en null
 */
-app.get('/logout', function(req, res) {
+app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
     //res.redirect('https://accounts.google.com/logout');
@@ -95,8 +121,8 @@ app.get('/logout', function(req, res) {
     para realizar cualquier operación
  */
 function isLoggedIn(req, res, next) {
-        if (req.isAuthenticated())
-            return next();
-        res.redirect('/');
+    if (req.isAuthenticated())
+        return next();
+    res.redirect('/');
 }
 module.exports = app;
