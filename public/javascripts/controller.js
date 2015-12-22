@@ -1,21 +1,29 @@
 angular.module('controllers', [])
 
-.controller('ctrlHome', function($scope,$state, factory) {
+.controller('ctrlHome', function ($scope, $state, factory) {
     
-        $scope.hola = function(){
-            console.log('hola home');
-        }
+    $scope.medicines = [];
     
+    
+    $scope.keneth = function () {
+        factory.getMedicines(2);
+        $scope.medicines = factory.medicines;        
+    }
+
+
+
 })
 
-.controller('ctrlUser', function($scope, $state, factory) {
-    $scope.user={bien: 'hola'};
-    
-    $scope.hola = function(){
-        
-        factory.getUser(function(res){
+.controller('ctrlUser', function ($scope, $state, factory) {
+    $scope.user = {
+        bien: 'hola'
+    };
+
+    $scope.hola = function () {
+
+        factory.getUser(function (res) {
             $scope.user = res;
         });
     }
-    
+
 })
