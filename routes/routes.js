@@ -51,6 +51,8 @@ app.get('/DrugstoreMedicine/:id', controllers.drugstore_medicine.getDrugstoreMed
 
 app.delete('/DrugstoreMedicine/:drugstore_id/:medicine_id', controllers.drugstore_medicine.deleteDrugstoreMedicine);
 
+app.put('/DrugstoreMedicine/:drugstore_id/:medicine_id', controllers.drugstore_medicine.updateDrugstoreMedicine);
+
 //*******************************************************************************
 //*******************************************************************************
 //*******************************************************************************
