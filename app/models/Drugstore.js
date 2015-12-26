@@ -35,7 +35,7 @@ module.exports = function (orm, db) {
         reverse: 'drugstores',
         key: true
     });
-    //Animal.hasOne('duenio', db.models.person, { required: true, reverse: 'mascotas'});
+    //Animal.hasOne('duenio', db.models.person, { required: true, reverse: 'mascotas'});    
     db.sync(function (err) {
         if (err) throw err;
     });

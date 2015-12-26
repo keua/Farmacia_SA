@@ -6,14 +6,12 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
-var passport = require("passport");
 var logger = require("express-logger");
 var server = http.createServer(app);
 var routes = require('./routes/routes');
 var models   = require('./app/models/');
 var orm = require("orm")
 
-require('./config/passport')(passport);
 
 
 // configure Express
@@ -34,11 +32,9 @@ app.set('view engine', 'ejs');
 app.use(logger({path: "logfile.txt"}));
 app.use(cookieParser());
 app.use(methodOverride());
-app.use(session({secret: 'keyboard cat'}));
+app.use(session({secret: 'HAJAI11234'}));
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
-app.use(passport.initialize());
-app.use(passport.session());
 //-----------------------------------------------------------------
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
