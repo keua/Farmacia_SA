@@ -35,15 +35,18 @@ module.exports = {
                 else
                     return next(err);
             }
-            client[0].getBills(function (err, bills) {
-                if (err) {
-                    if (err.code == orm.ErrorCodes.NOT_FOUND)
-                        res.send(404, "Bills not found");
-                    else
-                        return next(err);
-                }
-                return res.send(bills);
-            });
+            if(client[0]){
+                client[0].getBills(function (err, bills) {
+                    if (err) {
+                        if (err.code == orm.ErrorCodes.NOT_FOUND)
+                            res.send(404, "Bills not found");
+                        else
+                            return next(err);
+                    }
+                    return res.send(bills);
+                });                
+            }else
+                res.send(404, "Client not found 2");
         });
     },
 
