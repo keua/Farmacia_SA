@@ -15,8 +15,8 @@ module.exports = function (orm, db) {
         }
     });
     
-    Bill.hasOne('employee', db.models.employee, {required: true,reverse: 'bills'});
-    Bill.hasOne('client', db.models.client,     {required: true,reverse: 'bills'});
+    Bill.hasOne('employee', db.models.employee, {required: true, reverse: 'bills'});
+    Bill.hasOne('client', db.models.client,     {required: true, reverse: 'bills'});
     
     Bill.hasMany('medicines', db.models.drugstore_medicines, {
         quantity: {
