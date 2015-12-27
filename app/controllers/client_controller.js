@@ -26,6 +26,26 @@ module.exports = {
             res.send(200, client);
         });
     },
+    
+    getClientBills: function (req, res, next) {
+        req.models.client.find({nit: req.params.nit} , function (err, client) {
+            if (err) {
+                if (err.code == orm.ErrorCodes.NOT_FOUND)
+                    res.send(404, "Client not found");
+                else
+                    return next(err);
+            }
+            client[0].getBills(function (err, bills) {
+                if (err) {
+                    if (err.code == orm.ErrorCodes.NOT_FOUND)
+                        res.send(404, "Bills not found");
+                    else
+                        return next(err);
+                }
+                return res.send(bills);
+            });
+        });
+    },
 
     updateClient: function (req, res, next) {
         var params = _.pick(req.body, 'name', 'lastName', 'nit', 'phoneNumber', 'birth', 'address');

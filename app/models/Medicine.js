@@ -6,7 +6,7 @@ module.exports = function (orm, db) {
       {
         validations: {
             name   : orm.enforce.ranges.length(1, 50),
-            name   : orm.enforce.ranges.length(1, 250)
+            description   : orm.enforce.ranges.length(1, 250)
         },
         methods: {
           serialize: function () {

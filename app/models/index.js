@@ -8,6 +8,7 @@ function setup(db, cb) {
     require('./Medicine')(orm, db);
     require('./Drugstore')(orm, db);
     require('./Employee')(orm, db);
+    require('./Bill')(orm, db);
     return cb(null, db);
 }
 

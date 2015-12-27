@@ -16,14 +16,14 @@ var orm = require("orm")
 
 // configure Express
 app.use(function (req, res, next) {
-      models(function (err, db) {
-        if (err) return next(err);
+  models(function (err, db) {
+    if (err) return next(err);
 
-        req.models = db.models;
-        req.db     = db;
-          
-        return next();
-      });
+    req.models = db.models;
+    req.db     = db;
+
+    return next();
+  });
 });
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

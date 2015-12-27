@@ -15,6 +15,8 @@ app.get('/', function (req, res, next) {
 */
 app.get('/Client/:nit', controllers.client.getClient);
 
+app.get('/ClientBills/:nit', controllers.client.getClientBills);
+
 app.post('/Client', controllers.client.createClient);
 
 app.delete('/Client/:id', controllers.client.deleteClient);
@@ -45,6 +47,8 @@ app.get('/Drugstore/:id', controllers.drugstore.getDrugstore);
 
 app.get('/Drugstore', controllers.drugstore.getAllDrugstore);
 
+app.get('/DrugstoreEmployees/:id', controllers.drugstore.getDrugstoreEmployes);
+
 app.post('/Drugstore', controllers.drugstore.createDrugstore);
 
 app.delete('/Drugstore/:id', controllers.drugstore.deleteDrugstore);
@@ -61,6 +65,11 @@ app.get('/DrugstoreMedicine/:id', controllers.drugstore_medicine.getDrugstoreMed
 app.delete('/DrugstoreMedicine/:drugstore_id/:medicine_id', controllers.drugstore_medicine.deleteDrugstoreMedicine);
 
 app.put('/DrugstoreMedicine/:drugstore_id/:medicine_id', controllers.drugstore_medicine.updateDrugstoreMedicine);
+/*
+    Bill
+*/
+app.get('/Bill/:id', controllers.bill.getBill);
 
+app.post('/Bill', controllers.bill.createBill);
 
 module.exports = app;
