@@ -72,4 +72,6 @@ app.get('/Bill/:id', controllers.bill.getBill);
 
 app.post('/Bill', controllers.bill.createBill);
 
+app.post('/Bill', controllers.bill.createBill);
+
 module.exports = app;

@@ -1,0 +1,38 @@
+{
+"name": "Josue", 
+"lastName": "Chacon", 
+"phoneNumber": "12342123", 
+"birth": "19/09/2012", 
+"address": "SMP",
+"username": "201212774", 
+"password": "1234"
+}
+
+ 'name', 'lastName', 'nit', 'phoneNumber', 'birth', 'address');
+ 
+{
+"name": "Juan", 
+"lastName": "Lopez", 
+"phoneNumber": "12342123", 
+"birth": "19/09/2012", 
+"address": "SMP",
+"nit": "12345678"
+}
+
+'mount', 'client_id', 'employee_id');
+{
+"mount": 100.50,
+"client_id": 1, 
+"employee_id": 2,
+"drugstore_id": 2,
+"medicines": [
+    {
+        "medicine_id": 1,
+        "quantity": 1
+    },
+    {
+        "medicine_id": 2,
+        "quantity": 2
+    }
+]
+}

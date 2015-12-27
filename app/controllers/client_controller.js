@@ -57,7 +57,7 @@ module.exports = {
                     return next(err);
             }
             if (client) {
-                client.save(params, function (err, u) {
+                client.save(params, function (err) {
                     if (err)
                         return next(err);
                     res.send(200, client);

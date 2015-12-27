@@ -51,14 +51,21 @@ module.exports = {
                         else
                             return next(err);
                     }
+                    req.db.driver.execQuery(
+                      "UPDATE drugstore_medicines set quantity = ?, PriceUnit=? WHERE medicines_id=? AND drugstore_id=?",
+                      [params.quantity,params.PriceUnit, medicine[0].id, drugstore.id],
+                      function (err, data) { 
+                          if(err)
+                              console.log(err);
+                    });
                     medicine[0].extra.quantity = params.quantity;
                     medicine[0].extra.PriceUnit =  params.PriceUnit;
-
-                    medicine[0].save(function(err){
+                    return res.send(200, medicine[0]);
+                    /*medicine[0].save(function(err){
                         if (err) 
                             return next(err);
                         return res.send(200, medicine[0]);
-                    });
+                    });*/
                 });
             }
         });
