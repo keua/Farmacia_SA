@@ -69,7 +69,7 @@ module.exports = {
                 res.send(404, "Client not found 2");
         });
     },
-
+    
     deleteClient: function (req, res, next) {
         req.models.client.get(req.params.id, function (err, client) {
             if (err) {
