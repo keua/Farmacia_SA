@@ -4,9 +4,14 @@ var settings = require('../../config/settings');
 var connection = null;
 
 function setup(db, cb) {
+
     require('./Client')(orm, db);
     require('./Medicine')(orm, db);
     require('./Drugstore')(orm, db);
+    require('./Employee')(orm, db);
+    require('./Bill')(orm, db);
+    require('./PaymentType')(orm, db);
+    require('./Payment')(orm, db);
     return cb(null, db);
 }
 

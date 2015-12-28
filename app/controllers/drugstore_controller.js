@@ -28,6 +28,38 @@ module.exports = {
 
         });
     },
+    
+    getDrugstoreEmployes: function (req, res, next) {
+        req.models.drugstore(req.params.id).getEmployees(function (err, employees) {
+            if (err) {
+                if (err.code == orm.ErrorCodes.NOT_FOUND)
+                    res.send(404, "Drugstore not found");
+                else
+                    return next(err);
+            }
+            if (employees)
+                res.send(200, employees);
+            else
+                res.send(404, "Employees not found");
+
+        });
+    },
+    
+    getAllDrugstore: function (req, res, next) {
+        req.models.drugstore.find( function (err, drugstore) {
+            if (err) {
+                if (err.code == orm.ErrorCodes.NOT_FOUND)
+                    res.send(404, "Drugstore not found");
+                else
+                    return next(err);
+            }
+            if (drugstore)
+                res.send(200, drugstore);
+            else
+                res.send(404, "Drugstore not found");
+
+        });
+    },
 
     updateDrugstore: function (req, res, next) {
         var params = _.pick(req.body, 'name', 'phoneNumber', 'address');
