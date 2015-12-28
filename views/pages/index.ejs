@@ -2,40 +2,59 @@
 <html ng-app="appChaplist" lang="en">
 
 <head>
-    <% include ../partials/head.ejs %>
+    <% include ../partials/head %>
 </head>
 
-<body ng-controller="ctrlHome">
-    <header>
-        <% include ../partials/header %>
-    </header>
-
-    <div class="container col-md-8 col-md-offset-2">
-        <ui-view></ui-view>
-        <main>
-            <div class="jumbotron">
-                <div class="container">
-                    <div class="jumbotron text-center">
-                        <h1><span class="fa fa-lock"></span> ChapList Authentication API</h1>
-                        <p>Login or Register with:</p>
-                        <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
+<body ng-controller="ctrlHome" class="container">
+    <!-- <header>
+        <% //include ../partials/header %>
+    </header> -->
+    <main>
+        <div class="row">
+            <div class="container col-md-8 col-md-offset-2">
+                <ui-view></ui-view>
+                <main>
+                    <div class="jumbotron">
+                        <div class="container">
+                            <div class="jumbotron text-center">
+                                <form class="navbar-form navbar-center">
+                                    <h1><span class="fa fa-lock"></span> Farmacia</h1>
+                                    <p>Ingresar</p>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="<%- " Usuario " %>" class="form-control">
+                                        <br>
+                                        <input type="password" placeholder="<%- " Contraseña " %>" class="form-control">
+                                        <br>
+                                        <button type="submit" class="btn btn-success">
+                                            <%- "Ingresar" %>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                </main>
+                <button class="btn btn-energizer" ng-click="keneth()"></button>
+                <div class="item" ng-repeat="medicine in medicines">
+                    <span class="prioridad">Nombre: {{medicine.name}}</span>
+                    <br>
+                    <span><a href="#"> Description: {{medicine.description}} </a>
+                    <br>               
+                    <span class="prioridad">Cantidad: {{medicine.quantity}}</span>
+                    <br>
+                    <span class="prioridad">Precio: {{medicine.PriceUnit}}</span>
+                    <br>
+                    <span class="glyphicon glyphicon-edit text-warning" ng-click="procesaObjeto(tarea)"></span>
+                    <span class="glyphicon glyphicon-remove text-danger" ng-click="eliminar(tarea)"></span>
+                    <br>
+                    </span>
                 </div>
             </div>
-        </main>
-        <button class="btn btn-energizer" ng-click="keneth()"></button>
-        <div class="item" ng-repeat="medicine in medicines">
-            <span class="prioridad">Nombre: {{medicine.name}}</span><br>
-            <span><a href="#"> Description: {{medicine.description}} </a><br>               
-            <span class="prioridad">Cantidad: {{medicine.quantity}}</span><br>
-            <span class="prioridad">Precio: {{medicine.PriceUnit}}</span><br> 
-                <span class="glyphicon glyphicon-edit text-warning" ng-click="procesaObjeto(tarea)"></span>
-            <span class="glyphicon glyphicon-remove text-danger" ng-click="eliminar(tarea)"></span><br>
-            </span>
         </div>
-    </div>
+    </main>
+
     <footer>
-        <% include ../partials/footer.ejs %>
+        <% include ../partials/footer %>
     </footer>
 </body>
 

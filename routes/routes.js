@@ -10,6 +10,13 @@ app.get('/', function (req, res, next) {
         user: null
     });
 });
+
+app.get('/SalePoint', function (req, res, next) {
+    res.render('pages/sale_point', {
+        user: null
+    });
+});
+
 /*
     Client
 */
