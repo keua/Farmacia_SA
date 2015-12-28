@@ -403,3 +403,7 @@
 192.168.122.1 - - [Tue, 22 Dec 2015 22:57:10 GMT] "GET /DrugstoreMedicine/2 HTTP/1.1" 304 - "http://192.168.122.11:8080/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36"
 192.168.122.1 - - [Tue, 22 Dec 2015 22:57:14 GMT] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36"
 192.168.122.1 - - [Tue, 22 Dec 2015 22:57:17 GMT] "GET /DrugstoreMedicine/2 HTTP/1.1" 304 - "http://192.168.122.11:8080/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36"
+::ffff:127.0.0.1 - - [Mon, 28 Dec 2015 19:14:23 GMT] "GET / HTTP/1.1" 200 3617 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36"
+::ffff:127.0.0.1 - - [Mon, 28 Dec 2015 19:14:53 GMT] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36"
+::ffff:127.0.0.1 - - [Mon, 28 Dec 2015 19:14:54 GMT] "GET /favicon.ico HTTP/1.1" 404 - "http://localhost:8080/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36"
+::ffff:127.0.0.1 - - [Mon, 28 Dec 2015 19:14:55 GMT] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36"
