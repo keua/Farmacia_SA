@@ -26,7 +26,7 @@ module.exports = {
         });
     },
     getPaymentType: function (req, res, next) {
-        req.models.paymenttype.get(req.params.id, function (err, data) {
+        req.models.paymenttype.find(function (err, data) {
             if (err) {
                 if (err.code == orm.ErrorCodes.NOT_FOUND)
                     res.send(404, "PaymentType not found");
@@ -36,7 +36,7 @@ module.exports = {
             if(data)
                 res.send(200, data);
             else
-                res.send(404, "PaymentType not found");
+                res.send(404, {});
         });
     },
     updatePaymentType: function (req, res, next) {
@@ -55,7 +55,7 @@ module.exports = {
                     res.send(200, med);
                 });
             } else
-                res.send(404, "PaymentType not found 404_2");
+                res.send(404, {});
         });
     }
 }

@@ -41,7 +41,7 @@ module.exports = {
                 res.send(200, med);
             });           
         }else
-            res.send(404, "Medicine not found 404_2");
+            res.send(404, {});
       });
     }
 }

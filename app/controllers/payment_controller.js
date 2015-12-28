@@ -36,7 +36,7 @@ module.exports = {
             if (data)
                 res.send(200, data);
             else
-                res.send(404, "Payment not found");
+                res.send(404, {});
         });
     },
     getPaymentByBill: function (req, res, next) {
@@ -50,7 +50,7 @@ module.exports = {
             if (data)
                 res.send(200, data);
             else
-                res.send(404, "Payment not found");
+                res.send(404, {});
         });
     },
     updatePayment: function (req, res, next) {
@@ -69,7 +69,7 @@ module.exports = {
                     res.send(200, med);
                 });
             } else
-                res.send(404, "Payment not found 404_2");
+                res.send(404, {});
         });
     }
 }

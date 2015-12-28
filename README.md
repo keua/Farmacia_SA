@@ -20,3 +20,37 @@ This chat example showcases how to use `socket.io` with a static `express` serve
     $ node server.js
 
 Once the server is running, open the project in the shape of 'https://projectname-username.c9.io/'. As you enter your name, watch the Users list (on the left) update. Once you press Enter or Send, the message is shared with all connected clients.
+
+
+{
+    "mount": 100,
+    "client_id": 1,
+    "employee_id": 2,
+    "drugstore_id": 2,
+    "medicines": [
+        {
+            "medicine_id": 1,
+            "quantity":    1     
+        },
+        {
+            "medicine_id": 2,
+            "quantity":    1     
+        },
+        {
+            "medicine_id": 2,
+            "quantity":    1     
+        }    
+    ],
+    "payments": [
+        {
+            "payment_id": 1,
+            "mount": 50,
+            "surcharge": 0
+        },
+        {
+            "payment_id": 2,
+            "mount": 50,
+            "surcharge": 2.5 
+        }
+    ]
+}

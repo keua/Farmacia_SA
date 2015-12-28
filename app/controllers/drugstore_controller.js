@@ -24,11 +24,11 @@ module.exports = {
             if (drugstore)
                 res.send(200, drugstore);
             else
-                res.send(404, "Drugstore not found");
+                res.send(404, {});
 
         });
     },
-    
+
     getDrugstoreEmployes: function (req, res, next) {
         req.models.drugstore(req.params.id).getEmployees(function (err, employees) {
             if (err) {
@@ -40,13 +40,13 @@ module.exports = {
             if (employees)
                 res.send(200, employees);
             else
-                res.send(404, "Employees not found");
+                res.send(404, {});
 
         });
     },
-    
+
     getAllDrugstore: function (req, res, next) {
-        req.models.drugstore.find( function (err, drugstore) {
+        req.models.drugstore.find(function (err, drugstore) {
             if (err) {
                 if (err.code == orm.ErrorCodes.NOT_FOUND)
                     res.send(404, "Drugstore not found");
@@ -56,7 +56,7 @@ module.exports = {
             if (drugstore)
                 res.send(200, drugstore);
             else
-                res.send(404, "Drugstore not found");
+                res.send(404, {});
 
         });
     },
@@ -77,7 +77,7 @@ module.exports = {
                     res.send(200, drugstore);
                 });
             } else
-                res.send(404, "Drugstore not found");
+                res.send(404, {});
         });
     },
 
@@ -96,7 +96,7 @@ module.exports = {
                     res.send(200, 'ok');
                 });
             } else
-                res.send(404, "Drugstore not found");
+                res.send(404, {});
         });
     }
 }

@@ -79,7 +79,7 @@ app.post('/Bill', controllers.bill.createBill);
 */
 app.post('/PaymentType', controllers.paymenttype.createPaymentType);
 
-app.get('/PaymentType/:id', controllers.paymenttype.getPaymentType);
+app.get('/PaymentType', controllers.paymenttype.getPaymentType);
 
 app.delete('/PaymentType/:id', controllers.paymenttype.deletePaymentType);
 
