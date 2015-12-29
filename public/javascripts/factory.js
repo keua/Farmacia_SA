@@ -3,13 +3,13 @@ angular.module('factories', [])
 .factory('factory', function($http) {
     var comun = {} ;
     comun.medicines = [];
-    comun.user = {};
+    comun.employee = {};
     
-    comun.getUser= function(callback){
-        return $http.get('/user')
+    comun.login = function(data, callback){
+        return $http.get('/Employee/'+data.user+'/'+data.pass)
             .success(function(res){
-                comun.user = res;
-                callback(comun.user);
+                comun.employee = res;
+                callback(comun.employee);
         });
     }
     

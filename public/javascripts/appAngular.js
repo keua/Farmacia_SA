@@ -1,15 +1,17 @@
-angular.module('appChaplist', ['ui.router', 'controllers', 'factories'])
+angular.module('appChaplist', ['ui.router', 'controllers', 'factories','LocalStorageModule'])
 
-/*.config(function ($routeProvider, $locationProvider) {
-    $locationProvider.html5Mode(true);
-   $routeProvider
-      .when('/', {
-         templateUrl : 'pages/index',
-         controller  : 'ctrlHome'
-      })
-      .when('/home', {
-         templateUrl : 'pages/profile',
-         controller  : 'ctrlUser'
-      })
-      //.otherwise({redirectTo: "/"});
-});*/
+.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+        .state('index', {
+            url: '/index',
+            templateUrl: 'views/index.html',
+            controller: 'ctrlHome'
+        })
+        .state('salePoint', {
+            url: '/salePoint',
+            templateUrl: 'views/salePoint.html',
+            controller: 'ctrlUser'
+        });
+
+    $urlRouterProvider.otherwise('index');
+})

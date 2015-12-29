@@ -13,9 +13,11 @@ module.exports = {
             return res.send(200, employee);
         });
     },
+    
+    
     getEmployee: function (req, res, next) {
         req.models.employee.find({
-            username: req.params.username
+            username: req.params.username, password: req.params.password
         }, function (err, employee) {
             if (err) {
                 if (err.code == orm.ErrorCodes.NOT_FOUND)
@@ -23,13 +25,14 @@ module.exports = {
                 else
                     return next(err);
             }
+            //res.send(200, employee[0]);
             if (employee[0]) {
                 employee[0].getDrugstore(function (err, drugstore) {
                     employee[0].drugstore = drugstore;
                     res.send(200, employee[0]);
                 });
             } else
-                res.send(404, {});
+                res.send({});
         });
     },
 

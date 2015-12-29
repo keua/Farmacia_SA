@@ -11,12 +11,6 @@ app.get('/', function (req, res, next) {
     });
 });
 
-app.get('/SalePoint', function (req, res, next) {
-    res.render('pages/sale_point', {
-        user: null
-    });
-});
-
 /*
     Client
 */
@@ -32,7 +26,7 @@ app.put('/Client/:id', controllers.client.updateClient);
 /*
     Employee
 */
-app.get('/Employee/:username', controllers.employee.getEmployee);
+app.get('/Employee/:username/:password', controllers.employee.getEmployee);
 
 app.post('/Employee', controllers.employee.createEmployee);
 

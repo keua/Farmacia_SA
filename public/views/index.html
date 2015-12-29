@@ -1,0 +1,25 @@
+   <main>
+        <div class="row">
+            <div class="container col-md-8 col-md-offset-2">
+                <ui-view></ui-view>
+                <main>
+                    <div class="jumbotron">
+                        <div class="container">
+                            <div class="jumbotron text-center">
+                                <form class="navbar-form navbar-center">
+                                    <h1><span class="fa fa-lock"></span> Farmacia</h1>
+                                    <p>Ingresar</p>
+                                    <div class="form-group">
+                                        <input type="text" placeholder=" Usuario " ng-model="data.user" class="form-control">
+                                        <br>
+                                        <input type="password" placeholder=" Contraseña " ng-model="data.pass" class="form-control">
+                                        <br>
+                                        <button type="submit" class="btn btn-success" ng-click="login(data)">
+                                            Ingresar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </main>
