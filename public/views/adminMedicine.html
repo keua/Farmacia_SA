@@ -1,16 +1,18 @@
 <header>
     <nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
+        <div class="container-fluid">
 
-        <ul class="nav navbar-nav" align="left">
-            <li><button type="button" class="btn btn-danger" ng-click="logout()">Logout</button></li>
-            <li><a href="" ng-click="goAdmin()">Gestion de medicinas</a></li>
-        </ul>
+            <ul class="nav navbar-nav" align="left">
+                <li>
+                    <button type="button" class="btn btn-danger" ng-click="logout()">Logout</button>
+                </li>
+                <li><a href="#/salePoint">Home</a></li>
+            </ul>
 
-    </div>
-</nav>
+        </div>
+    </nav>
 </header>
-   <div>
+<div>
     <span ng-click="show2(employee)">{{employee.name}}</span>
 
 </div>
@@ -22,29 +24,25 @@
                 <tr>
                     <th>
                         <div class="form-group">
-                            <label>
-                                <input class="form-control" type="text" name="name" ng-model="showCase.medicine2Add.name" value="">
-                            </label>
+                            Precio Unitario:
                         </div>
                     </th>
                     <th>
                         <div class="form-group">
                             <label>
-                                <input type="text" class="form-control" name="description" ng-model="showCase.medicine2Add.description" value="">
+                                <input type="number" class="form-control" name="PriceUnit" ng-model="showCase.medicine2Add.PriceUnit" value="">
                             </label>
                         </div>
                     </th>
                     <th>
                         <div class="form-group">
-                            <label>
-                                <input type="text" class="form-control" name="PriceUnit" ng-model="showCase.medicine2Add.PriceUnit" value="">
-                            </label>
+                            Cantidad Stock:
                         </div>
                     </th>
                     <th>
                         <div class="form-group">
                             <label>
-                                <input type="text" class="form-control" name="quantity" ng-model="showCase.medicine2Add.quantity" value="">
+                                <input type="number" class="form-control" name="quantity" ng-model="showCase.medicine2Add.quantity" value="">
                             </label>
                         </div>
                     </th>
@@ -55,6 +53,7 @@
                     </th>
                 </tr>
                 <tr>
+                    <th>ID</th>
                     <th>Nombre</th>
                     <th>Descripcion</th>
                     <th>Precio Unitario</th>
@@ -65,15 +64,16 @@
             </thead>
             <tbody>
                 <tr ng-repeat="medicine in showCase.medicines">
+                    <td>{{ medicine.id }}</td>
                     <td>{{ medicine.name }}</td>
                     <td>{{ medicine.description }}</td>
                     <td>{{ medicine.PriceUnit }}</td>
                     <td>{{ medicine.quantity }}</td>
                     <td>
-                      <button type="button" ng-click="showCase.modifyMedicine($index)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                        <button type="button" ng-click="showCase.modifyMedicine($index, medicine)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
                     </td>
                     <td>
-                        <button type="button" ng-click="showCase.removeMedicine($index)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                        <button type="button" ng-click="showCase.removeMedicine($index, medicine)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                     </td>
                 </tr>
             </tbody>

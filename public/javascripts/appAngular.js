@@ -1,4 +1,4 @@
-angular.module('appChaplist', ['ui.router', 'controllers', 'factories','LocalStorageModule'])
+angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatables','LocalStorageModule'])
 
 .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -10,7 +10,12 @@ angular.module('appChaplist', ['ui.router', 'controllers', 'factories','LocalSto
         .state('salePoint', {
             url: '/salePoint',
             templateUrl: 'views/salePoint.html',
-            controller: 'ctrlUser'
+            controller: 'ctrlSale as showCase'
+        })
+        .state('admin', {
+            url: '/admin',
+            templateUrl: 'views/adminMedicine.html',
+            controller: 'ctrlAdmin as showCase'
         });
 
     $urlRouterProvider.otherwise('index');
