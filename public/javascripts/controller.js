@@ -8,6 +8,8 @@ angular.module('controllers', [])
         pass: 1234
     };
     
+    if(factory.getEmployee().name)
+        $state.go('salePoint');
     
     $scope.login = function (data) {
         if (!data.user || !data.pass)

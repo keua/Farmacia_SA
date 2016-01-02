@@ -4,7 +4,8 @@ angular.module('factories', [])
     var comun = {};
     comun.medicines = [];
     comun.employee = {};
-    comun.drugstore = {};
+    comun.drugstore = {};   
+    
 
     comun.login = function (data, callback) {
         return $http.get('/Employee/' + data.user + '/' + data.pass)
