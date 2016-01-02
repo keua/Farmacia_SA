@@ -1041,3 +1041,5 @@
 127.0.0.1 - - [Sat, 02 Jan 2016 21:14:04 GMT] "GET /Employee/201212124/1234 HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0"
 127.0.0.1 - - [Sat, 02 Jan 2016 21:14:07 GMT] "GET /Employee/201212124/1234 HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0"
 127.0.0.1 - - [Sat, 02 Jan 2016 21:14:12 GMT] "GET /Employee/201212124/1234 HTTP/1.1" 304 - "http://localhost:8080/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0"
+127.0.0.1 - - [Sat, 02 Jan 2016 21:40:03 GMT] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0"
+127.0.0.1 - - [Sat, 02 Jan 2016 21:41:09 GMT] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0"
