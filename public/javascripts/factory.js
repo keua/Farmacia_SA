@@ -9,6 +9,7 @@ angular.module('factories', [])
     comun.login = function (data, callback) {
         return $http.get('/Employee/' + data.user + '/' + data.pass)
             .success(function (res) {
+                console.log(res)
                 comun.employee = res;
                 comun.drugstore = res.drugstore;
                 localStorageService.set('employee', res);

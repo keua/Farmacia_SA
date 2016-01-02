@@ -6,5 +6,8 @@ module.exports = {
     employee:           require('./employee_controller'),
     bill:               require('./bill_controller'),
     paymenttype:        require('./payment_type_controller'),
-    payment:            require('./payment_controller')
+    payment:            require('./payment_controller'),    
+    callcenter:         require('./callcenter_controller'),
+    operator:           require('./operator_controller'),   
+    order:              require('./order_controller')
 };

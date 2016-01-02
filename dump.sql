@@ -16,14 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `farmacia_db`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `farmacia_db` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `farmacia_db`;
-
---
 -- Table structure for table `bill`
 --
 
@@ -73,6 +65,53 @@ CREATE TABLE `bill_medicines` (
 LOCK TABLES `bill_medicines` WRITE;
 /*!40000 ALTER TABLE `bill_medicines` DISABLE KEYS */;
 /*!40000 ALTER TABLE `bill_medicines` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `callcenter`
+--
+
+DROP TABLE IF EXISTS `callcenter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `callcenter` (
+  `name` varchar(255) NOT NULL,
+  `isWorking` tinyint(1) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `callcenter`
+--
+
+LOCK TABLES `callcenter` WRITE;
+/*!40000 ALTER TABLE `callcenter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `callcenter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `callcenter_operators`
+--
+
+DROP TABLE IF EXISTS `callcenter_operators`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `callcenter_operators` (
+  `callcenter_id` int(11) NOT NULL,
+  `operators_id` int(11) NOT NULL,
+  `isOnDuty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `callcenter_operators`
+--
+
+LOCK TABLES `callcenter_operators` WRITE;
+/*!40000 ALTER TABLE `callcenter_operators` DISABLE KEYS */;
+/*!40000 ALTER TABLE `callcenter_operators` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -152,7 +191,7 @@ CREATE TABLE `drugstore_medicines` (
 
 LOCK TABLES `drugstore_medicines` WRITE;
 /*!40000 ALTER TABLE `drugstore_medicines` DISABLE KEYS */;
-INSERT INTO `drugstore_medicines` VALUES (1,2,107,10),(2,2,200,35),(3,2,255,15),(4,2,120,16);
+INSERT INTO `drugstore_medicines` VALUES (1,2,4,3),(2,2,200,35),(3,2,255,15),(4,2,120,16);
 /*!40000 ALTER TABLE `drugstore_medicines` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,6 +249,107 @@ LOCK TABLES `medicine` WRITE;
 /*!40000 ALTER TABLE `medicine` DISABLE KEYS */;
 INSERT INTO `medicine` VALUES ('vitaflenaco','alivia el dolor',1),('aspirina','alivia el dolor de cabeza',2),('alka d','alivia la diarrea',3),('penicilina','alivia de todo',4),('penicilina','alivia de todo',5);
 /*!40000 ALTER TABLE `medicine` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `operator`
+--
+
+DROP TABLE IF EXISTS `operator`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `operator` (
+  `name` varchar(255) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `callcenter_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `operator`
+--
+
+LOCK TABLES `operator` WRITE;
+/*!40000 ALTER TABLE `operator` DISABLE KEYS */;
+/*!40000 ALTER TABLE `operator` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `operator_orders`
+--
+
+DROP TABLE IF EXISTS `operator_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `operator_orders` (
+  `operator_id` int(11) NOT NULL,
+  `orders_id` int(11) NOT NULL,
+  `isOk` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `operator_orders`
+--
+
+LOCK TABLES `operator_orders` WRITE;
+/*!40000 ALTER TABLE `operator_orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `operator_orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order`
+--
+
+DROP TABLE IF EXISTS `order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `order` (
+  `totalAmount` int(11) NOT NULL,
+  `isCanceled` tinyint(1) DEFAULT NULL,
+  `dateEmited` date DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `operator_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order`
+--
+
+LOCK TABLES `order` WRITE;
+/*!40000 ALTER TABLE `order` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_medicines`
+--
+
+DROP TABLE IF EXISTS `order_medicines`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `order_medicines` (
+  `order_id` int(11) NOT NULL,
+  `medicines_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `PriceUnit` float NOT NULL,
+  `drugstoreId` int(11) NOT NULL,
+  KEY `order_id_index` (`order_id`),
+  KEY `medicines_id_index` (`medicines_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_medicines`
+--
+
+LOCK TABLES `order_medicines` WRITE;
+/*!40000 ALTER TABLE `order_medicines` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_medicines` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -271,4 +411,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-28 13:17:49
+-- Dump completed on 2016-01-02 13:13:55

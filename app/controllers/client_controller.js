@@ -46,7 +46,7 @@ module.exports = {
                     return res.send(bills);
                 });                
             }else
-                res.send(404,{});
+                res.send(404, "Client not found 2");
         });
     },
 
@@ -66,7 +66,7 @@ module.exports = {
                     res.send(200, client);
                 });
             } else
-                res.send(404, {});
+                res.send(404, "Client not found 2");
         });
     },
     
@@ -85,7 +85,7 @@ module.exports = {
                     res.send(200, 'ok');
                 });
             } else
-                res.send(404, {});
+                res.send(404, "Client not found");
         });
     }
 }

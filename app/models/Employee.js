@@ -7,7 +7,7 @@ module.exports = function (orm, db) {
         lastName: {
             type: 'text',
             required: true
-        },
+        },        
         username: {
             type: 'text',
             required: true
@@ -48,11 +48,8 @@ module.exports = function (orm, db) {
             }
         }
     });
-
-    Employee.hasOne('drugstore', db.models.drugstore, {
-        required: true,
-        reverse: 'employees'
-    });
+    
+    Employee.hasOne('drugstore', db.models.drugstore, {autoFetch : true,required: true,reverse: 'employees'});
 
     db.sync(function (err) {
         if (err) throw err;

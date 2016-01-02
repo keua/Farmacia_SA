@@ -15,8 +15,18 @@ angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatab
         .state('admin', {
             url: '/admin',
             templateUrl: 'views/adminMedicine.html',
-            controller: 'ctrlAdmin as showCase'
-        });
+            controller: 'ctrlAdmin'
+        })
+        .state('indexCC', {
+            url: '/indexCC',
+            templateUrl: 'views/indexCC.html',
+            controller: 'ctrlHomeCC'
+        })
 
+        .state('HomeCC', {
+            url: '/HomeCC',
+            templateUrl: 'views/HomeCC.html',
+            controller: 'ctrlAdminCC'
+        });
     $urlRouterProvider.otherwise('index');
 })

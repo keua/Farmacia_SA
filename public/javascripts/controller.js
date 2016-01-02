@@ -103,3 +103,24 @@ angular.module('controllers', [])
         vm.medicines.splice(index, 1);
     }
 })
+
+
+.controller('ctrlHomeCC', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+       $scope.login = function (data) {
+        if (!data.user || !data.pass)
+            $window.alert('llene los campos');
+        else {
+            factory.login(data, function (res) {
+                if (res.name) $state.go('HomeCC');
+                else
+                    $window.alert('Crendenciales incorrectas');
+            });
+        }
+    } 
+   
+})
+
+.controller('ctrlAdminCC', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+
+   
+})
