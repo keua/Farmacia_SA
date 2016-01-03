@@ -70,21 +70,55 @@ angular.module('controllers', [])
 
     $scope.sum = function(list, ls) {
         var total=0;
-        var i = 0;
+        var i = 0;        
           angular.forEach(list , function(item){
               total+= item*ls[i].PriceUnit;
               i++;
           });
           return total;
      }
-    
-     $scope.mount = function(price) {
-         var val = 0;         
-         val = price ;
-         console.log(val);
-         return val;         
-     }
      
+    $scope.pay = function(itemValue,listmedicine){
+        var total = 0;
+        var i = 0;
+        var fine = true;
+        var payments = [];
+        var medicines = [];
+        //mount, client_id, employee_id, medicines, drugstore_id, payments
+        if($scope.client){
+            angular.forEach(itemValue, function(item){
+                //verifico que no sobrepase el stock de productos
+                if(item > listmedicine[i].quantity){
+                    fine = false;
+                    return false;
+                }
+                aux = listmedicine[i];
+                total += item * aux.PriceUnit;
+                medicines.push(
+                    {
+                        medicine_id: aux.id,
+                        quantity:    item
+                    }
+                );
+                i++;
+            });
+            payments.push({
+                payment_id: 1,
+                mount: total,
+                surcharge: 0
+            });
+            if(fine){
+                console.log(total, medicines);
+                /*factory.createBill(total, $scope.client.id, $scope.employee.id, $scope.drugstore.id, listmedicine, payments).then(function(res) {
+                  console.log(res);
+                });*/
+            }else
+                $window.alert('Algunas cantidades solicitads sobrepasan el stock de la tienda!!');
+            
+        }else
+            $window.alert('Tiene que buscar un cliente para realizar el pago!!!');
+        
+    }
 
     //*****************************************************************************************************
     vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(10);
