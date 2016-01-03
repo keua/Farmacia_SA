@@ -23,7 +23,7 @@ module.exports = {
                 else
                     return next(err);
             }
-            res.send(200, client);
+            res.send(200, client[0]);
         });
     },
     

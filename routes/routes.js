@@ -100,5 +100,39 @@ app.delete('/Payment/:id', controllers.payment.deletePayment);
 
 app.put('/Payment/:id', controllers.payment.updatePayment);
 
+/*
+    Operator
+*/
+app.get('/Operator/:name', controllers.operator.getOperator);
+
+app.post('/Operator', controllers.operator.createOperator);
+
+app.put('/Operator/:id', controllers.operator.updateOperator);
+
+/*
+    CallCenter
+*/
+app.get('/CallCenter/:id', controllers.callcenter.getCallCenter);
+
+app.get('/GetCallCenter', controllers.callcenter.getAllCallCenter);
+
+app.get('/CallCenterOperator/:id', controllers.callcenter.getCallCenterOperators);
+
+app.post('/CallCenter', controllers.callcenter.createCallCenter);
+
+app.delete('/CallCenter/:id', controllers.callcenter.deleteCallCenter);
+
+app.put('/CallCenter/:id', controllers.callcenter.updateCallCenter);
+
+/*
+    Order
+*/
+app.get('/Order/:id', controllers.order.getOrder);
+
+app.post('/Order', controllers.order.createOrder);
+
+app.put('/OrderMedicine/:order_id/:medicine_id', controllers.order.updateOrderMedicine);
+
+app.delete('/OrderMedicine/:order_id/:medicine_id', controllers.order.deleteOrderMedicine);
 
 module.exports = app;

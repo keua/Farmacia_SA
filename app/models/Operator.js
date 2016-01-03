@@ -16,7 +16,7 @@ module.exports = function (orm, db) {
                 }
         });
 
-    Operator.hasOne('callcenter', db.models.callcenter, {autoFetch : true,required: true,reverse: 'operators'});
+    Operator.hasOne('callcenter', db.models.callcenter, {required: true,reverse: 'operators'});
     Operator.hasMany('orders', db.models.order, {
         isOk: {
             type: 'integer',

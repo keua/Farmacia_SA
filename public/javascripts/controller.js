@@ -7,7 +7,10 @@ angular.module('controllers', [])
         user: 201212124,
         pass: 1234
     };
-
+    
+    if(factory.getEmployee().name)
+        $state.go('salePoint');
+    
     $scope.login = function (data) {
         if (!data.user || !data.pass)
             $window.alert('llene los campos');
@@ -21,6 +24,7 @@ angular.module('controllers', [])
     }
 })
 
+/*_________________________________________________________________________________________________________*/
 .controller('ctrlSale', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
     var vm = this;
     vm.medicines = [];
@@ -99,7 +103,7 @@ angular.module('controllers', [])
     }
 
     function removeMedicine(index, medicine) {
-        factory.deleteMedicine(drugstore.id, medicine.id);
+        factory.deleteMedicine(drugstore.id, medicine.id, index);
         vm.medicines.splice(index, 1);
     }
 })
