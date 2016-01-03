@@ -13,7 +13,7 @@ module.exports = function (orm, db) {
         methods: {}
         });
 
-    CallCenter.hasMany('operators', db.models.operator, {
+    /*CallCenter.hasMany('operators', db.models.operator, {
         isOnDuty: {
             type: 'integer',
             required: true
@@ -21,7 +21,7 @@ module.exports = function (orm, db) {
     }, {
         reverse: 'callcenters',
         key: true
-    });
+    });*/
     db.sync(function (err) {
         if (err) throw err;
     });
