@@ -69,9 +69,10 @@ module.exports = {
                         [medicine[0].id, medicine[0].drugstoreId], function (err, drug_med) 
                         {
                             if(drug_med[0])
-                            {
+                            {    
                                 var difference = medicine[0].extra.quantity - params.quantity;
                                 difference = drug_med[0].quantity + difference;
+                                console.log(" "+medicine[0].quantity);
                                 req.db.driver.execQuery(
                                   "UPDATE drugstore_medicines set quantity = ?, PriceUnit=? WHERE medicines_id=? AND drugstore_id=?",
                                   [difference,params.PriceUnit, medicine[0].id, medicine[0].drugstoreId],
@@ -91,23 +92,84 @@ module.exports = {
         });
     },
 
-    deleteOrderMedicine: function (req, res, next) {
+    deleteOrderMedicine: function (req, res, next) 
+    {
         req.models.medicine.get(req.params.medicine_id, function (err, medicine) {
-            if (err) {
+            if (err) 
+            {
                 if (err.code == orm.ErrorCodes.NOT_FOUND)
                     res.send(404, "Medicine not found 1");
                 else
                     return next(err);
-            } else {
-                req.models.order(req.params.order_id).removeMedicines(medicine,function (err) {
+            } 
+            else 
+            {
+                req.models.order.get(req.params.order_id, function (err,order) 
+                {
                     if (err) {
-                        if (Array.isArray(err))
-                            return res.send(200, err);
+                        if (err.code == orm.ErrorCodes.NOT_FOUND)
+                            res.send(404, "Order not found 1");
                         else
                             return next(err);
-                    }
-                    return res.send(200, 'ok');
-                });
+                    } 
+                    else 
+                    {
+                        order.getMedicines({medicines_id: req.params.medicine_id},
+                            function (err, medicineFromOrder) 
+                            {
+                                if (err) 
+                                {
+                                    if (err.code == orm.ErrorCodes.NOT_FOUND)
+                                        res.send(404, "Medicine not found 1");
+                                    else
+                                        return next(err);
+                                }
+                                req.models.drugstore.get(medicineFromOrder[0].drugstoreId,
+                                    function (err, drugstore) 
+                                    {
+                                        if (err) {
+                                            if (err.code == orm.ErrorCodes.NOT_FOUND)
+                                                res.send(404, "Drugstore not found 1");
+                                            else
+                                                return next(err);
+                                        } 
+                                        else 
+                                        {
+                                            drugstore.getMedicines({id: req.params.medicine_id},     
+                                            function (err, medicineToUpdate) 
+                                            {
+                                                if (err) 
+                                                {
+                                                    if (err.code == orm.ErrorCodes.NOT_FOUND)
+                                                        res.send(404, "Medicine not found 1");
+                                                    else
+                                                        return next(err);
+                                                }
+                                                var newQuantity = medicineToUpdate[0].quantity +  medicineFromOrder[0].quantity; 
+                                                req.db.driver.execQuery
+                                                (
+                                                "UPDATE drugstore_medicines set quantity = ? WHERE medicines_id=? AND drugstore_id=?", 
+                                                [newQuantity, medicineFromOrder[0].id, medicineFromOrder[0].drugstoreId],
+                                                function (err, data) {
+                                                    if (err)
+                                                        console.log(err);
+                                                });                                                
+                                                req.models.order(req.params.order_id).removeMedicines(medicine,function (err) {
+                                                    if (err) {
+                                                        if (Array.isArray(err))
+                                                            return res.send(200, err);
+                                                        else
+                                                            return next(err);
+                                                    }
+                                                    return res.send(200, 'ok');
+                                                });
+                                            });
+                                        }
+                                    });
+ 
+                                });
+                            }
+                        });
             }
         });
     }

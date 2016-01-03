@@ -66,7 +66,7 @@ module.exports = {
         req.models.callcenter.get(req.params.id, function (err, callcenter) {
             if (err) {
                 if (err.code == orm.ErrorCodes.NOT_FOUND)
-                    res.send(404, "CallCenter not found");
+                    res.send(404, "CallCenter not found 1");
                 else
                     return next(err);
             }
@@ -77,7 +77,7 @@ module.exports = {
                     res.send(200, callcenter);
                 });
             } else
-                res.send(404, "CallCenter not found");
+                res.send(404, "CallCenter not found 2");
         });
     },
 
@@ -85,7 +85,7 @@ module.exports = {
         req.models.callcenter.get(req.params.id, function (err, callcenter) {
             if (err) {
                 if (err.code == orm.ErrorCodes.NOT_FOUND)
-                    res.send(404, "CallCenter not found");
+                    res.send(404, "CallCenter not found 5");
                 else
                     return next(err);
             }
@@ -96,7 +96,7 @@ module.exports = {
                     res.send(200, 'ok');
                 });
             } else
-                res.send(404, "CallCenter not found");
+                res.send(404, "CallCenter not found 6");
         });
     }
 }

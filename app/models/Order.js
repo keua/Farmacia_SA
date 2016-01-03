@@ -26,7 +26,7 @@ module.exports = function (orm, db) {
         reverse: 'orders'
     });
 
-    Order.hasMany('medicines', db.models.drugstore_medicines, {
+    Order.hasMany('medicines', db.models.medicine, {
         quantity: {
             type: 'integer',
             required: true
