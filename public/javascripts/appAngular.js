@@ -15,7 +15,7 @@ angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatab
         .state('admin', {
             url: '/admin',
             templateUrl: 'views/adminMedicine.html',
-            controller: 'ctrlAdmin as showCase'
+            controller: 'ctrlAdmin as showCaseAdmin'
         });
 
     $urlRouterProvider.otherwise('index');
