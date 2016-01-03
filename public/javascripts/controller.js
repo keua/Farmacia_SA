@@ -37,7 +37,6 @@ angular.module('controllers', [])
     $scope.drugstore = drugstore;
     $scope.client = {};
     $scope.data = {};
-    $scope.total = 0;
     $scope.itemValue = [];
 
     if (drugstore.id) {
@@ -45,7 +44,11 @@ angular.module('controllers', [])
         vm.medicines = factory.medicines;
     } else
         $state.go('index');
-
+    
+    factory.getPayment().then(function(res) {
+        $scope.data.paymentTypes = res.data;
+    });
+    
     $scope.logout = function () {
         factory.logout();
         $state.go('index');
@@ -85,7 +88,14 @@ angular.module('controllers', [])
         var payments = [];
         var medicines = [];
         //mount, client_id, employee_id, medicines, drugstore_id, payments
-        if($scope.client){
+        if($scope.client.name){            
+            if($scope.data.paymentType == null){
+                $window.alert('Seleccione un tipo de pago válido!');
+                return false;
+            }         
+            var type = $scope.data.paymentTypes.filter(function( obj ) {
+              return obj.id == $scope.data.paymentType;
+            });
             angular.forEach(itemValue, function(item){
                 //verifico que no sobrepase el stock de productos
                 if(item > listmedicine[i].quantity){
@@ -101,20 +111,22 @@ angular.module('controllers', [])
                     }
                 );
                 i++;
-            });
-            payments.push({
-                payment_id: 1,
-                mount: total,
-                surcharge: 0
-            });
-            if(fine){
-                console.log(total, medicines);
-                /*factory.createBill(total, $scope.client.id, $scope.employee.id, $scope.drugstore.id, listmedicine, payments).then(function(res) {
-                  console.log(res);
-                });*/
-            }else
-                $window.alert('Algunas cantidades solicitads sobrepasan el stock de la tienda!!');
+            });            
             
+            payments.push({
+                payment_id: type[0].id,
+                mount: total,
+                surcharge: total * type[0].surcharge
+            });
+            if(total > 0){
+                if(fine){
+                factory.createBill(total, $scope.client.id, $scope.employee.id, $scope.drugstore.id, listmedicine, payments).then(function(res) {
+                  console.log(res);
+                });
+                }else
+                    $window.alert('Algunas cantidades solicitads sobrepasan el stock de la tienda!!');
+            }else
+                $window.alert('El monto de compra no supera la cantidad de 1.00!!');
         }else
             $window.alert('Tiene que buscar un cliente para realizar el pago!!!');
         
@@ -213,6 +225,11 @@ angular.module('controllers', [])
 })
 
 .controller('ctrlUser',function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    
+    $scope.logout = function () {
+            factory.logout();
+            $state.go('index');
+        }
     
     $scope.data = {};
     

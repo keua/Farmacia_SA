@@ -60,13 +60,16 @@
                                     <input type="NIT" class="form-control" id="nit" ng-model="data.client" placeholder="Ingresar el nit">
                                 </div>
                                 <button type="submit" ng-click="findClient()" class="btn btn-default">Buscar</button>
+
                                 <div align="right">
-                                   <p>
-                                       <h3>Total. </h3>{{sum(itemValue,sale.listmedicine)}}
-                                   </p>
+                                    <p>
+                                        <h3>Total. </h3>{{sum(itemValue,sale.listmedicine)}}
+                                    </p>
                                     <button type="submit" ng-click="pay(itemValue,sale.listmedicine)" class="btn btn-warning btn-lg"><i class="fa fa-shopping-cart"></i></button>
                                 </div>
                                 <div>
+                                    <br>
+                                    <br>
                                     <table>
                                         <tbody>
                                             <tr>
@@ -90,8 +93,15 @@
                                                 <th><span>Telefono:</span></th>
                                                 <th><span>{{client.phoneNumber}}</span> </th>
                                             </tr>
+                                            <tr>
+                                            </tr>
                                         </tbody>
                                     </table>
+                                    <br>
+                                    <label for="repeatSelect"> Tipo de pago: </label>
+                                    <select name="repeatSelect" id="repeatSelect" ng-model="data.paymentType">
+                                        <option ng-repeat="option in data.paymentTypes" value="{{option.id}}">{{option.name}}</option>
+                                    </select>
                                     <br>
                                     <br>
                                 </div>
@@ -113,8 +123,7 @@
                                         <td>{{ medicine.description }}</td>
                                         <td>{{ medicine.PriceUnit }}</td>
                                         <td>
-                                            <input type="number" ng-model="itemValue[$index]" id={{medicine.id}} name="quantity" value="1"
-                                             align="center">
+                                            <input type="number" ng-model="itemValue[$index]" id={{medicine.id}} name="quantity" value="1" align="center">
                                         </td>
                                         <td>{{medicine.PriceUnit * itemValue[$index]}}</td>
                                         <td align="center">
@@ -122,7 +131,7 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>                            
+                            </table>
                         </div>
                     </div>
                 </div>
