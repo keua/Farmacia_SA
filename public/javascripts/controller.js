@@ -246,3 +246,48 @@ angular.module('controllers', [])
         });        
     }
 })
+
+.controller('ctrlUser',function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    
+    $scope.logout = function () {
+            factory.logout();
+            $state.go('index');
+        }
+    
+    $scope.data = {};
+    
+    $scope.createClient = function(){
+        factory.createClient($scope.data).then(function(res) {
+            if(res.status == 200 && res.data){
+                $window.alert('Cliente:  creado satisfactoriamente');
+                $scope.data = {};
+                
+            }else
+                $window.alert('Error al crear el nuevo cliente, verifique los datos!!');
+                
+        });        
+    }
+})
+
+
+.controller('ctrOrder',function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    
+    $scope.logout = function () {
+            factory.logout();
+            $state.go('index');
+        }
+    
+    $scope.data = {};
+    
+    $scope.createClient = function(){
+        factory.createClient($scope.data).then(function(res) {
+            if(res.status == 200 && res.data){
+                $window.alert('Cliente:  creado satisfactoriamente');
+                $scope.data = {};
+                
+            }else
+                $window.alert('Error al crear el nuevo cliente, verifique los datos!!');
+                
+        });        
+    }
+})

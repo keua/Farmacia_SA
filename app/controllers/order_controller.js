@@ -2,7 +2,7 @@ var orm = require('orm');
 var _ = require("lodash");
 module.exports = {
         createOrder: function (req, res, next) {
-            var params = _.pick(req.body, 'totalAmount','isCanceled','dateEmited','client_id', 'operator_id');
+            var params = _.pick(req.body, 'totalAmount','isCanceled','dateEmited','client_id', 'operator_id','drugstore_id');
             var otherParams = _.pick(req.body, 'medicines', 'drugstore_id');
             params.date = new Date();
 
@@ -24,6 +24,42 @@ module.exports = {
                     addMedicines(req, res, next, drugstore, order, otherParams.medicines);
                 });
             });
+        },
+        getOrderbySucursal:function (req, res, next) {
+                    req.models.order.find({
+                    drugstore_id: req.params.drugstore_id
+                }, function (err, order) {
+                    if (err) {
+                        if (err.code == orm.ErrorCodes.NOT_FOUND)
+                            res.send(404, "Client not found");
+                        else
+                            return next(err);
+                    }
+                        var lista=[];
+                        order.forEach(function (order) {
+                        req.models.order.get(order.id, function (err, order) {
+                            if (err) {
+                                if (err.code == orm.ErrorCodes.NOT_FOUND)
+                                    res.send(404, "oder not found");
+                                else
+                                    return next(err);
+                            }
+                            if (order) {
+                                order.getMedicines(function (err, medicines) {
+                                    if (err) {
+                                        if (err.code == orm.ErrorCodes.NOT_FOUND)
+                                            res.send(404, "Medicines not found in the Order");
+                                        else
+                                            return next(err);
+                                    }
+                                    order.medicines = medicines;                           
+                                });
+                                res.send(200, order);
+                            } else
+                                res.send(404, 'Order not found 2');
+                        });
+                     });
+                });
         },
 
         getOrder: function (req, res, next) {

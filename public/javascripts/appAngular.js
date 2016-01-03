@@ -21,7 +21,13 @@ angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatab
             url: '/UserRegister',
             templateUrl: 'views/UserRegister.html',
             controller: 'ctrlUser as ShowCaseUser'
-        });
+        })
+        .state('Order', {
+            url: '/Order',
+            templateUrl: 'views/Order.html',
+            controller: 'ctrOrder as ShowCaseOrder'
+        })
+        ;
 
 
     $urlRouterProvider.otherwise('index');

@@ -128,6 +128,8 @@ app.put('/CallCenter/:id', controllers.callcenter.updateCallCenter);
 /*
     Order
 */
+app.get('/OrderDrugstore/:drugstore_id', controllers.order.getOrderbySucursal);
+
 app.get('/Order/:id', controllers.order.getOrder);
 
 app.post('/Order', controllers.order.createOrder);
