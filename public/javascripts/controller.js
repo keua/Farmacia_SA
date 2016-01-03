@@ -61,7 +61,6 @@ angular.module('controllers', [])
     $scope.findClient = function () {
         if ($scope.data.client) {
             factory.getClient($scope.data.client).then(function (res) {
-                console.log(res);
                 if (res.status == 200 && res.data)
                     $scope.client = res.data;
                 else
@@ -92,10 +91,8 @@ angular.module('controllers', [])
             if($scope.data.paymentType == null){
                 $window.alert('Seleccione un tipo de pago válido!');
                 return false;
-            }         
-            var type = $scope.data.paymentTypes.filter(function( obj ) {
-              return obj.id == $scope.data.paymentType;
-            });
+            }       
+            var type = JSON.parse( $scope.data.paymentType);
             angular.forEach(itemValue, function(item){
                 //verifico que no sobrepase el stock de productos
                 if(item > listmedicine[i].quantity){
@@ -121,7 +118,11 @@ angular.module('controllers', [])
             if(total > 0){
                 if(fine){
                 factory.createBill(total, $scope.client.id, $scope.employee.id, $scope.drugstore.id, listmedicine, payments).then(function(res) {
-                  console.log(res);
+                    console.log(res);
+                    vm.listmedicine = [];
+                    $scope.client = {};
+                    $scope.itemValue = [];
+                    
                 });
                 }else
                     $window.alert('Algunas cantidades solicitads sobrepasan el stock de la tienda!!');
