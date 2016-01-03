@@ -4,8 +4,10 @@ angular.module('factories', [])
     var comun = {};
     comun.medicines = [];
     comun.employee = {};
+    comun.operator = {};
     comun.drugstore = {};
-
+    comun.orders = [];
+    comun.detailsOrder = [];
 
     comun.login = function (data, callback) {
         return $http.get('/Employee/' + data.user + '/' + data.pass)
@@ -52,7 +54,7 @@ angular.module('factories', [])
 
     /*OBTENER EMPLEADO, DESLOGUEO Y FARMACIA*/
     comun.getEmployee = function () {
-        if (!comun.employee.id) {
+        if (!comun.employee) {
             comun.employee = localStorageService.get('employee');
             return comun.employee;
         } else
@@ -84,8 +86,16 @@ angular.module('factories', [])
 
     /*OBTENER TIPOS DE PAGO*/
     comun.getPayment = function () {
-        return $http.get('/PaymentType')
+            return $http.get('/PaymentType')
+                .success(function (res) {
+                    return res;
+                });
+        }
+        /* OBTENER TODAS LAS ORDENES */
+    comun.getAllOrder = function () {
+        return $http.get('/AllOrder')
             .success(function (res) {
+                angular.copy(res, comun.orders);
                 return res;
             });
     }
@@ -105,6 +115,7 @@ angular.module('factories', [])
                 return res;
             });
     }
+<<<<<<< HEAD
     /** --------------------------- Desarrollo JoseEstrada --------**/
     
 
@@ -132,5 +143,49 @@ angular.module('factories', [])
                 return res;
             });
     }
+=======
+
+    /*CALCENTER*/
+    comun.loginCC = function (nombre, callback) {
+        return $http.get('/Operator/' + nombre)
+            .success(function (res) {
+                comun.operator = res[0];
+                localStorageService.set('operator', res[0]);
+                callback(res[0]);
+            });
+    }
+
+    /*OBTENER OPERADOR, DESLOGUEO Y FARMACIA*/
+    comun.getOperator = function () {
+        if (!comun.operator.id) {
+            comun.operator = localStorageService.get('operator');
+            return comun.operator;
+        } else
+            return comun.operator;
+    }
+
+    comun.logoutCC = function () {
+        comun.employee = {};
+        localStorageService.set('operator', {});
+    }
+
+    comun.deleteOrder = function (order, index) {
+        return $http.delete('/OrderDelete/' + order.id)
+            .success(function (res) {
+                comun.orders.splice(index, 1);
+            });
+    }
+
+    comun.details = function (order) {
+        comun.detailsOrder = [];
+        return $http.get('/OrderMedicines/' + order.id)
+            .success(function (res) {
+
+                angular.copy(res, comun.detailsOrder);
+                return comun.detailsOrder;
+            });
+    }
+
+>>>>>>> 265d969659f906a6568eba86dd9c784b1df66428
     return comun;
 })

@@ -9,7 +9,12 @@ angular.module('controllers', [])
     };
 
     if (factory.getEmployee())
+<<<<<<< HEAD
         $state.go('salePoint');
+=======
+        if (factory.getEmployee().name)
+            $state.go('salePoint');
+>>>>>>> 265d969659f906a6568eba86dd9c784b1df66428
 
     $scope.login = function (data) {
         if (!data.user || !data.pass)
@@ -26,7 +31,7 @@ angular.module('controllers', [])
 
 /*_________________________________________________________________________________________________________*/
 .controller('ctrlSale', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
-    
+
     var vm = this;
     var drugstore = factory.getDrugstore();
 
@@ -44,11 +49,11 @@ angular.module('controllers', [])
         vm.medicines = factory.medicines;
     } else
         $state.go('index');
-    
-    factory.getPayment().then(function(res) {
+
+    factory.getPayment().then(function (res) {
         $scope.data.paymentTypes = res.data;
     });
-    
+
     $scope.logout = function () {
         factory.logout();
         $state.go('index');
@@ -70,67 +75,91 @@ angular.module('controllers', [])
             $window.alert('Ingrese el nit del cliente para realizar la compra');
     }
 
-    $scope.sum = function(list, ls) {
-        var total=0;
-        var i = 0;        
-          angular.forEach(list , function(item){
-              total+= item*ls[i].PriceUnit;
-              i++;
-          });
-          return total;
-     }
-     
-    $scope.pay = function(itemValue,listmedicine){
+    $scope.sum = function (list, ls) {
+        var total = 0;
+        var i = 0;
+        angular.forEach(list, function (item) {
+            total += item * ls[i].PriceUnit;
+            i++;
+        });
+        $scope.data.total = total;
+        return total;
+    }
+
+    $scope.surcharge = function () {
+        var type
+        if ($scope.data.paymentType) {
+            type = JSON.parse($scope.data.paymentType);
+            $scope.data.surcharge = ($scope.data.total * type.surcharge).toFixed(2);
+            return $scope.data.surcharge;
+        }
+        return 0;
+
+    }
+
+    $scope.pay = function (itemValue, listmedicine) {
         var total = 0;
         var i = 0;
         var fine = true;
         var payments = [];
         var medicines = [];
         //mount, client_id, employee_id, medicines, drugstore_id, payments
-        if($scope.client.name){            
-            if($scope.data.paymentType == null){
+        if ($scope.client.name) {
+            if ($scope.data.paymentType == null) {
                 $window.alert('Seleccione un tipo de pago válido!');
                 return false;
-            }       
-            var type = JSON.parse( $scope.data.paymentType);
-            angular.forEach(itemValue, function(item){
+            }
+            var type = JSON.parse($scope.data.paymentType);
+            angular.forEach(itemValue, function (item) {
                 //verifico que no sobrepase el stock de productos
-                if(item > listmedicine[i].quantity){
+                if (item > listmedicine[i].quantity) {
                     fine = false;
                     return false;
                 }
                 aux = listmedicine[i];
                 total += item * aux.PriceUnit;
-                medicines.push(
-                    {
-                        medicine_id: aux.id,
-                        quantity:    item
-                    }
-                );
-                i++;
-            });            
-            
-            payments.push({
-                payment_id: type[0].id,
-                mount: total,
-                surcharge: total * type[0].surcharge
-            });
-            if(total > 0){
-                if(fine){
-                factory.createBill(total, $scope.client.id, $scope.employee.id, $scope.drugstore.id, listmedicine, payments).then(function(res) {
-                    console.log(res);
-                    vm.listmedicine = [];
-                    $scope.client = {};
-                    $scope.itemValue = [];
-                    
+                medicines.push({
+                    medicine_id: aux.id,
+                    quantity: item
                 });
-                }else
+                i++;
+            });
+
+            payments.push({
+                payment_id: type.id,
+                mount: total,
+                surcharge: $scope.data.surcharge
+            });
+            if (total > 0) {
+                if (fine) {
+                    total = parseFloat($scope.data.total) + parseFloat($scope.data.surcharge);
+                    factory.createBill(total, $scope.client.id, $scope.employee.id, $scope.drugstore.id, listmedicine, payments).then(function (res) {
+                        console.log(res);
+                        cleanMount();
+                    });
+                } else
                     $window.alert('Algunas cantidades solicitads sobrepasan el stock de la tienda!!');
-            }else
+            } else
                 $window.alert('El monto de compra no supera la cantidad de 1.00!!');
-        }else
+        } else
             $window.alert('Tiene que buscar un cliente para realizar el pago!!!');
-        
+    }
+
+    function cleanMount() {
+        printIt()
+        vm.listmedicine = [];
+        $scope.client = {};
+        $scope.itemValue = [];
+        $scope.data.total = 0;
+        $scope.data.surcharge = 0;
+    }
+
+    function printIt() {
+        var Detail = document.getElementById('Detail').innerHTML;
+        var myWindow = $window.open('', '', 'width=800, height=600');
+        myWindow.document.write(Detail);
+        console.log(myWindow.document);
+        myWindow.print();
     }
 
     //*****************************************************************************************************
@@ -162,11 +191,14 @@ angular.module('controllers', [])
 
     var vm = this;
     var drugstore = factory.getDrugstore();
+<<<<<<< HEAD
     
+=======
+>>>>>>> 265d969659f906a6568eba86dd9c784b1df66428
     vm.medicines = [];
     vm.listmedicine = [];
-    
-    
+
+
     $scope.employee = factory.getEmployee();
     $scope.data = {};
 
@@ -224,26 +256,143 @@ angular.module('controllers', [])
     }
 })
 
-.controller('ctrlUser',function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
-    
+.controller('ctrlUser', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+
     $scope.logout = function () {
-            factory.logout();
-            $state.go('index');
-        }
-    
+        factory.logout();
+        $state.go('index');
+    }
+
     $scope.data = {};
-    
-    $scope.createClient = function(){
-        factory.createClient($scope.data).then(function(res) {
-            if(res.status == 200 && res.data){
+
+    $scope.createClient = function () {
+        factory.createClient($scope.data).then(function (res) {
+            if (res.status == 200 && res.data) {
+                $window.alert('Cliente creado satisfactoriamente');
+                $scope.data = {};
+
+            } else
+                $window.alert('Error al crear el nuevo cliente, verifique los datos!!');
+
+        });
+    }
+})
+
+.controller('ctrlUser', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+
+    $scope.logout = function () {
+        factory.logout();
+        $state.go('index');
+    }
+
+    $scope.data = {};
+
+    $scope.createClient = function () {
+        factory.createClient($scope.data).then(function (res) {
+            if (res.status == 200 && res.data) {
                 $window.alert('Cliente:  creado satisfactoriamente');
                 $scope.data = {};
-                
-            }else
+
+            } else
                 $window.alert('Error al crear el nuevo cliente, verifique los datos!!');
-                
-        });        
+
+        });
     }
+})
+
+
+.controller('ctrlIndexCC', function ($scope, $state, $window, factory) {
+
+    $scope.medicines = [];
+    $scope.data = {
+        name: 'tomochan'
+    };
+
+    if (factory.getEmployee())
+        if (factory.getEmployee().name)
+            $state.go('homeCC');
+
+    $scope.login = function () {
+        if (!$scope.data.name)
+            $window.alert('llene los campos');
+        else {
+            factory.loginCC($scope.data.name, function (res) {
+                if (res.name) $state.go('homeCC');
+                else
+                    $window.alert('Crendenciales incorrectas');
+            });
+        }
+    }
+})
+
+.controller('ctrlHomeCC', function ($scope, $state, $window, factory) {
+    $scope.operator = factory.getOperator();
+
+    $scope.logout = function () {
+        factory.logoutCC();
+        $state.go('indexCC');
+    }
+
+    if (!$scope.operator.name)
+        $state.go('indexCC');
+
+
+})
+
+.controller('ctrlOrder', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    var vm = this;
+    $scope.data = {};
+
+    factory.getAllOrder();
+    vm.orders = factory.orders;
+    vm.details = [];
+
+
+    $scope.logout = function () {
+        factory.logout();
+        $state.go('index');
+    }
+
+    $scope.createClient = function () {
+        factory.createClient($scope.data).then(function (res) {
+            if (res.status == 200 && res.data) {
+                $window.alert('Cliente:  creado satisfactoriamente');
+                $scope.data = {};
+
+            } else
+                $window.alert('Error al crear el nuevo cliente, verifique los datos!!');
+
+        });
+    }
+
+    vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(10);
+    vm.dtColumnDefs = [
+        DTColumnDefBuilder.newColumnDef(0),
+        DTColumnDefBuilder.newColumnDef(1),
+        DTColumnDefBuilder.newColumnDef(2),
+        DTColumnDefBuilder.newColumnDef(3),
+        DTColumnDefBuilder.newColumnDef(4),
+        DTColumnDefBuilder.newColumnDef(5),
+        DTColumnDefBuilder.newColumnDef(6)
+    ];
+
+    vm.dtColumnDefs1 = [
+        DTColumnDefBuilder.newColumnDef(0),
+        DTColumnDefBuilder.newColumnDef(1),
+        DTColumnDefBuilder.newColumnDef(2),
+        DTColumnDefBuilder.newColumnDef(3)
+
+    ];
+    //deleteOrder
+    vm.removeOrder = removeOrder;
+    vm.detalle = detalle;
+
+    function removeOrder(index, order) {
+        vm.details = [];
+        factory.deleteOrder(order, index);
+        vm.orders.splice(index, 1);
+    }
+<<<<<<< HEAD
 })
 /*_________________________________________________________________________________________________________*/
 .controller('ctrlOrder', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
@@ -395,4 +544,13 @@ angular.module('controllers', [])
     function removeMedicine(index, medicine) {
         vm.listmedicine.splice(index, 1);
     }
+=======
+
+    function detalle(order) {
+        factory.details(order);
+        vm.details = factory.detailsOrder;
+    }
+
+
+>>>>>>> 265d969659f906a6568eba86dd9c784b1df66428
 })

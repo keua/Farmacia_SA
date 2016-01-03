@@ -7,6 +7,11 @@ angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatab
             templateUrl: 'views/index.html',
             controller: 'ctrlHome'
         })
+        .state('indexCC', {
+            url: '/indexCC',
+            templateUrl: 'views/indexCC.html',
+            controller: 'ctrlIndexCC'
+        })
         .state('salePoint', {
             url: '/salePoint',
             templateUrl: 'views/salePoint.html',
@@ -26,6 +31,16 @@ angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatab
             url: '/UserRegister',
             templateUrl: 'views/UserRegister.html',
             controller: 'ctrlUser as ShowCaseUser'
+        })
+        .state('homeCC', {
+            url: '/homeCC',
+            templateUrl: 'views/HomeCC.html',
+            controller: 'ctrlHomeCC as homecc'
+        })
+        .state('Order', {
+            url: '/Order',
+            templateUrl: 'views/Order.html',
+            controller: 'ctrlOrder as order'
         });
 
 

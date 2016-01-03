@@ -7,8 +7,9 @@
         <div class="container-fluid">
             <ul class="nav navbar-nav" align="left" valign="center">
                 <li><a href="#/salePoint">Home</a></li>
-                <li><a href="" ng-click="goAdmin()">Gestion de medicinas</a></li>
+                <li><a href="#/admin">Gestion de medicinas</a></li>
                 <li><a href="#/UserRegister">Registro</a></li>
+                <li><a href="#/Order">Pedidos</a></li>
             </ul>
         </div>
     </nav>
@@ -51,91 +52,117 @@
         <div class=".col-sm-5 .col-md-6">
             <div class="container">
                 <div class="panel-group">
-                    <div class="panel panel-primary">
+                    <div class="panel panel-primary" id="Detail">
                         <div class="panel-heading"><span>Listado de medicinas</span></div>
                         <div class="panel-body">
-                            <form class="form-inline" role="form">
-                                <div class="form-group">
-                                    <label class="sr-only" for="Nit">NIT:</label>
-                                    <input type="NIT" class="form-control" id="nit" ng-model="data.client" placeholder="Ingresar el nit">
-                                </div>
-                                <button type="submit" ng-click="findClient()" class="btn btn-default">Buscar</button>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Información Cliente</div>
+                                <div class="panel-body">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <th>
+                                                <form class="form-inline" role="form">
+                                                    <div class="form-group">
+                                                        <label class="sr-only" for="Nit">NIT:</label>
+                                                        <input type="NIT" class="form-control" id="nit" ng-model="data.client" placeholder="Ingresar el nit">
+                                                    </div>
+                                                    <button type="submit" ng-click="findClient()" class="btn btn-default">Buscar</button>
+                                                </form>
+                                            </th>
+                                            <th>
+                                                <table style="width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th><span>Nombre:</span></th>
+                                                            <th><span>{{client.name}}</span> </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><span>Apellido:</span></th>
+                                                            <th><span>{{client.lastName}}</span> </th>
 
-                                <div align="right">
-                                    <p>
-                                        <h3>Total. </h3>{{sum(itemValue,sale.listmedicine)}}
-                                    </p>
-                                    <button type="submit" ng-click="pay(itemValue,sale.listmedicine)" class="btn btn-warning btn-lg"><i class="fa fa-shopping-cart"></i></button>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><span>NIT:</span></th>
+                                                            <th><span>{{client.nit}}</span> </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><span>Direccion:</span></th>
+                                                            <th><span>{{client.address}}</span> </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><span>Telefono:</span></th>
+                                                            <th><span>{{client.phoneNumber}}</span> </th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </th>
+                                            <th>
+
+                                                <table style="width:100%">
+                                                    <tr>
+                                                        <th>
+                                                            <h3>Total. </h3>{{sum(itemValue,sale.listmedicine)}}</th>
+                                                        <th>
+                                                            <h3>Recargo. </h3>{{surcharge()}}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            <button type="submit" ng-click="pay(itemValue,sale.listmedicine)" class="btn btn-warning btn-lg">
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                            </button>
+                                                        </th>
+                                                        <th>
+                                                            <label for="repeatSelect"> Tipo de pago: </label>
+                                                            <br>
+                                                            <select name="repeatSelect" id="repeatSelect" ng-model="data.paymentType">
+                                                                <option ng-repeat="option in data.paymentTypes" value="{{option}}">
+                                                                    {{option.name}}
+                                                                </option>
+                                                            </select>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </th>
+                                        </tr>
+                                    </table>
                                 </div>
-                                <div>
-                                    <br>
-                                    <br>
-                                    <table>
+                            </div>
+                            <div class="panel panel-success">
+                                <div class="panel-heading">Detalle</div>
+                                <div class="panel-body">
+
+                                    <table class="display" datatable="ng" dt-options="sale.dtOptions" dt-column-defs="sale.dtColumnDefs1" class=".col-sm-8 .col-sm-pull-4">
+
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Descripcion</th>
+                                                <th>Precio Unitario</th>
+                                                <th>Cantidad</th>
+                                                <th>Q</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
-                                            <tr>
-                                                <th><span>Nombre:</span></th>
-                                                <th><span>{{client.name}}</span> </th>
-                                            </tr>
-                                            <tr>
-                                                <th><span>Apellido:</span></th>
-                                                <th><span>{{client.lastName}}</span> </th>
-
-                                            </tr>
-                                            <tr>
-                                                <th><span>NIT:</span></th>
-                                                <th><span>{{client.nit}}</span> </th>
-                                            </tr>
-                                            <tr>
-                                                <th><span>Direccion:</span></th>
-                                                <th><span>{{client.address}}</span> </th>
-                                            </tr>
-                                            <tr>
-                                                <th><span>Telefono:</span></th>
-                                                <th><span>{{client.phoneNumber}}</span> </th>
-                                            </tr>
-                                            <tr>
+                                            <tr ng-repeat="medicine in sale.listmedicine">
+                                                <td>{{ medicine.name }}</td>
+                                                <td>{{ medicine.description }}</td>
+                                                <td>{{ medicine.PriceUnit }}</td>
+                                                <td>
+                                                    <input type="number" ng-model="itemValue[$index]" id={{medicine.id}} name="quantity" value="1" align="center">
+                                                </td>
+                                                <td>{{medicine.PriceUnit * itemValue[$index]}}</td>
+                                                <td align="center">
+                                                    <button type="button" ng-click="sale.removeMedicine($index, medicine)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <br>
-                                    <label for="repeatSelect"> Tipo de pago: </label>
-                                    <select name="repeatSelect" id="repeatSelect" ng-model="data.paymentType">
-                                        <option ng-repeat="option in data.paymentTypes" value="{{option}}">{{option.name}}</option>
-                                    </select>
-                                    <br>
-                                    <br>
                                 </div>
-                            </form>
-                            <table class="display" datatable="ng" dt-options="sale.dtOptions" dt-column-defs="sale.dtColumnDefs1" class=".col-sm-8 .col-sm-pull-4">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Descripcion</th>
-                                        <th>Precio Unitario</th>
-                                        <th>Cantidad</th>
-                                        <th>Q</th>
-                                        <th>Eliminar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="medicine in sale.listmedicine">
-                                        <td>{{ medicine.name }}</td>
-                                        <td>{{ medicine.description }}</td>
-                                        <td>{{ medicine.PriceUnit }}</td>
-                                        <td>
-                                            <input type="number" ng-model="itemValue[$index]" id={{medicine.id}} name="quantity" value="1" align="center">
-                                        </td>
-                                        <td>{{medicine.PriceUnit * itemValue[$index]}}</td>
-                                        <td align="center">
-                                            <button type="button" ng-click="sale.removeMedicine($index, medicine)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
