@@ -22,7 +22,7 @@ angular.module('factories', [])
         return $http.get('/DrugstoreMedicine/' + drugstore_id)
             .success(function (res) {
                 angular.copy(res, comun.medicines);
-                return comun.mediciness;
+                return comun.medicines;
             });
     }
 
@@ -89,7 +89,7 @@ angular.module('factories', [])
                 return res;
             });
     }
-
+    
     /*CREAR FACTURAS*/
     comun.createBill = function (mount, client_id, employee_id, drugstore_id, medicines, payments) {
         var body = {
@@ -101,6 +101,33 @@ angular.module('factories', [])
             payments: payments
         }
         return $http.post('/Bill', body)
+            .success(function (res) {
+                return res;
+            });
+    }
+    /** --------------------------- Desarrollo JoseEstrada --------**/
+    
+
+    /*OBTENER Sucursales*/
+    comun.getDrugstoreFromWS = function () {
+        return $http.get('/Drugstore')
+            .success(function (res) 
+            {
+                return res;
+            });
+    }
+    /*CREAR PEDIDOS*/
+    comun.createOrder = function (totalAmount, isCanceled, dateEmited, client_id, operator_id, medicines,drugstore_id) {
+        var body = {
+            totalAmount: totalAmount,
+            isCanceled: isCanceled,
+            dateEmited: dateEmited,
+            client_id: client_id,
+            operator_id: operator_id,
+            medicines: medicines,
+            drugstore_id : drugstore_id
+        }
+        return $http.post('/Order', body)
             .success(function (res) {
                 return res;
             });

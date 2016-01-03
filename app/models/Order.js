@@ -1,7 +1,7 @@
 module.exports = function (orm, db) {
     var Order = db.define('order', {
         totalAmount: {
-            type: 'integer',
+            type: 'number',
             required: true
         },
         isCanceled: {

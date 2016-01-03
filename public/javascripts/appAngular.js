@@ -12,6 +12,11 @@ angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatab
             templateUrl: 'views/salePoint.html',
             controller: 'ctrlSale as sale'
         })
+        .state('orderManager', {
+            url: '/orderManager',
+            templateUrl: 'views/orderManager.html',
+            controller: 'ctrlOrder as theOrder'
+        })
         .state('admin', {
             url: '/admin',
             templateUrl: 'views/adminMedicine.html',
