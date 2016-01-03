@@ -52,7 +52,7 @@
             <div class="container">
                 <div class="panel-group">
                     <div class="panel panel-primary">
-                        <div class="panel-heading"><span ng-click="show2(employee)">Listado de medicinas</span></div>
+                        <div class="panel-heading"><span>Listado de medicinas</span></div>
                         <div class="panel-body">
                             <form class="form-inline" role="form">
                                 <div class="form-group">
@@ -100,7 +100,7 @@
                                     <br>
                                     <label for="repeatSelect"> Tipo de pago: </label>
                                     <select name="repeatSelect" id="repeatSelect" ng-model="data.paymentType">
-                                        <option ng-repeat="option in data.paymentTypes" value="{{option.id}}">{{option.name}}</option>
+                                        <option ng-repeat="option in data.paymentTypes" value="{{option}}">{{option.name}}</option>
                                     </select>
                                     <br>
                                     <br>
