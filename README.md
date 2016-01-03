@@ -58,6 +58,7 @@ Once the server is running, open the project in the shape of 'https://projectnam
 GIT COMMANDS
 
 Revertir version 
+	
 	git reset --hard <old-commit-id>
 	
 	git push -f <remote-name> <branch-name> 
