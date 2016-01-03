@@ -28,8 +28,10 @@ angular.module('controllers', [])
 .controller('ctrlSale', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
     var vm = this;
     vm.medicines = [];
+    vm.listmedicine = [];
     var drugstore = factory.getDrugstore();
     $scope.employee = factory.getEmployee();
+    $scope.drugstore = drugstore;
 
     if (drugstore.id) {
         factory.getMedicines(drugstore.id);
@@ -40,6 +42,38 @@ angular.module('controllers', [])
     $scope.logout = function () {
         factory.logout();
         $state.go('index');
+    }
+
+    //*****************************************************************************************************
+    vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(10);
+    vm.dtColumnDefs = [
+        DTColumnDefBuilder.newColumnDef(0),
+        DTColumnDefBuilder.newColumnDef(1),
+        DTColumnDefBuilder.newColumnDef(2),
+        DTColumnDefBuilder.newColumnDef(3),
+        DTColumnDefBuilder.newColumnDef(4)
+    ];
+    vm.dtColumnDefs1 = [
+        DTColumnDefBuilder.newColumnDef(0),
+        DTColumnDefBuilder.newColumnDef(1),
+        DTColumnDefBuilder.newColumnDef(2),
+        DTColumnDefBuilder.newColumnDef(3),
+        DTColumnDefBuilder.newColumnDef(4),
+        DTColumnDefBuilder.newColumnDef(5)
+    ];
+
+    vm.addMedicine = addMedicine;
+    vm.removeMedicine = removeMedicine;
+
+    function addMedicine(med) {
+
+        vm.listmedicine.push(med);
+
+    }
+
+    function removeMedicine(index, medicine) {
+        //factory.deleteMedicine(drugstore.id, medicine.id);
+        vm.listmedicine.splice(index, 1);
     }
 
     $scope.goAdmin = function () {
@@ -52,6 +86,7 @@ angular.module('controllers', [])
 
     var vm = this;
     vm.medicines = [];
+    vm.listmedicine = [];
     var drugstore = factory.getDrugstore();
     $scope.employee = factory.getEmployee();
 
@@ -62,18 +97,17 @@ angular.module('controllers', [])
         $state.go('index');
     //****************************************************************************************************
     $scope.logout = function () {
-        factory.logout();
-        $state.go('index');
-    }
-
+            factory.logout();
+            $state.go('index');
+        }
+        //*****************************************************************************************************
     vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(10);
     vm.dtColumnDefs = [
         DTColumnDefBuilder.newColumnDef(0),
         DTColumnDefBuilder.newColumnDef(1),
         DTColumnDefBuilder.newColumnDef(2),
         DTColumnDefBuilder.newColumnDef(3),
-        DTColumnDefBuilder.newColumnDef(4),
-        DTColumnDefBuilder.newColumnDef(5)
+        DTColumnDefBuilder.newColumnDef(4)
     ];
 
     vm.meicine2Add = _buildMedicine2Add(1);
@@ -90,7 +124,7 @@ angular.module('controllers', [])
         };
     }
 
-    function addMedicine() {
+    function addMedicine(med) {
         vm.medicines.push(angular.copy(vm.medicine2Add));
         vm.medicine2Add = _buildMedicine2Add(vm.medicine2Add.id + 1);
     }

@@ -1,12 +1,15 @@
 <header>
     <nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
+        <div class="container-fluid">
 
-        <ul class="nav navbar-nav" align="left">
-            <li><button type="button" class="btn btn-danger" ng-click="logout()">Logout</button></li>
-            <li><a href="" ng-click="goAdmin()">Gestion de medicinas</a></li>
-        </ul>
+            <ul class="nav navbar-nav" align="left" valign="center">
+                <li align="center" valign="center">
+                    <button type="button" class="btn btn-danger" ng-click="logout()">Logout</button>
+                </li>
+                <li><a href="" ng-click="goAdmin()">Gestion de medicinas</a></li>
+            </ul>
 
+<<<<<<< HEAD
     </div>
 </nav>
 </header>
@@ -50,32 +53,101 @@
                     <th>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>
+=======
+        </div>
+    </nav>
+
+</header>
+<div class="row">
+    <div class=".col-sm-8 .col-sm-pull-4">
+        <div class="container">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><span ng-click="show2(employee)">Atendiendo {{employee.name}}, Farmacia {{drugstore.name}}</span></div>
+                    <div class="panel-body">
+                        <table class="display" datatable="ng" dt-options="showCase.dtOptions" dt-column-defs="showCase.dtColumnDefs" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Descripcion</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Cantidad Stock</th>
+                                    <th>Agregar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="medicine in showCase.medicines">
+                                    <td>{{ medicine.name }}</td>
+                                    <td>{{ medicine.description }}</td>
+                                    <td>{{ medicine.PriceUnit }}</td>
+                                    <td>{{ medicine.quantity }}</td>
+                                    <td align="center">
+                                        <button type="button" ng-click="showCase.addMedicine(medicine)" class="btn btn-success"><i class="fa fa-plus"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=".col-sm-8 .col-sm-pull-4">
+        <div class="container">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><span ng-click="show2(employee)">Atendiendo {{employee.name}}, Farmacia {{drugstore.name}}</span></div>
+                    <div class="panel-body">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label class="sr-only" for="Nit">NIT:</label>
+                                <input type="NIT" class="form-control" id="nit" placeholder="Ingresar el nit">
+                            </div>
+                            <button type="submit" class="btn btn-default">Buscar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class=".col-sm-5 .col-md-6">
+            <div class="container">
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"><span ng-click="show2(employee)">Listado de medicinas</span></div>
+                        <div class="panel-body">
+                            <table class="display" datatable="ng" dt-options="showCase.dtOptions" dt-column-defs="showCase.dtColumnDefs1" class=".col-sm-8 .col-sm-pull-4">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripcion</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Cantidad</th>
+                                        <th>Q</th>
+                                        <th>Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="medicine in showCase.listmedicine">
+                                        <td>{{ medicine.name }}</td>
+                                        <td>{{ medicine.description }}</td>
+                                        <td>{{ medicine.PriceUnit }}</td>
+                                        <td>
+                                            <input type="number" id={{medicine.id}} name="quantity" value="1" align="center">
+                                        </td>
+                                        <td>{{medicine.PriceUnit}}</td>
+                                        <td align="center">
+                                            <button type="button" ng-click="showCase.removeMedicine($index, medicine)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+>>>>>>> 191dc52f8ba1b7c7160ae3332fe8ef6c5b5937ae
                         </div>
-                    </th>
-                </tr>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    <th>Precio Unitario</th>
-                    <th>Cantidad Stock</th>
-                    <th>Actualizar</th>
-                    <th>Eliminar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="medicine in showCase.medicines">
-                    <td>{{ medicine.name }}</td>
-                    <td>{{ medicine.description }}</td>
-                    <td>{{ medicine.PriceUnit }}</td>
-                    <td>{{ medicine.quantity }}</td>
-                    <td>
-                      <button type="button" ng-click="showCase.modifyMedicine($index)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
-                    </td>
-                    <td>
-                        <button type="button" ng-click="showCase.removeMedicine($index)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
