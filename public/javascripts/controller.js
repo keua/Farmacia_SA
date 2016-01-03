@@ -7,10 +7,10 @@ angular.module('controllers', [])
         user: 201212124,
         pass: 1234
     };
-    
-    if(factory.getEmployee().name)
+
+    if (factory.getEmployee().name)
         $state.go('salePoint');
-    
+
     $scope.login = function (data) {
         if (!data.user || !data.pass)
             $window.alert('llene los campos');
@@ -26,22 +26,110 @@ angular.module('controllers', [])
 
 /*_________________________________________________________________________________________________________*/
 .controller('ctrlSale', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    
     var vm = this;
+    var drugstore = factory.getDrugstore();
+
     vm.medicines = [];
     vm.listmedicine = [];
-    var drugstore = factory.getDrugstore();
+
     $scope.employee = factory.getEmployee();
     $scope.drugstore = drugstore;
+    $scope.client = {};
+    $scope.data = {};
+    $scope.itemValue = [];
 
     if (drugstore.id) {
         factory.getMedicines(drugstore.id);
         vm.medicines = factory.medicines;
     } else
         $state.go('index');
-
+    
+    factory.getPayment().then(function(res) {
+        $scope.data.paymentTypes = res.data;
+    });
+    
     $scope.logout = function () {
         factory.logout();
         $state.go('index');
+    }
+
+    $scope.goAdmin = function () {
+        $state.go('admin');
+    }
+
+    $scope.findClient = function () {
+        if ($scope.data.client) {
+            factory.getClient($scope.data.client).then(function (res) {
+                console.log(res);
+                if (res.status == 200 && res.data)
+                    $scope.client = res.data;
+                else
+                    $window.alert('Cliente con NIT no identificado!!');
+            });
+        } else
+            $window.alert('Ingrese el nit del cliente para realizar la compra');
+    }
+
+    $scope.sum = function(list, ls) {
+        var total=0;
+        var i = 0;        
+          angular.forEach(list , function(item){
+              total+= item*ls[i].PriceUnit;
+              i++;
+          });
+          return total;
+     }
+     
+    $scope.pay = function(itemValue,listmedicine){
+        var total = 0;
+        var i = 0;
+        var fine = true;
+        var payments = [];
+        var medicines = [];
+        //mount, client_id, employee_id, medicines, drugstore_id, payments
+        if($scope.client.name){            
+            if($scope.data.paymentType == null){
+                $window.alert('Seleccione un tipo de pago válido!');
+                return false;
+            }         
+            var type = $scope.data.paymentTypes.filter(function( obj ) {
+              return obj.id == $scope.data.paymentType;
+            });
+            angular.forEach(itemValue, function(item){
+                //verifico que no sobrepase el stock de productos
+                if(item > listmedicine[i].quantity){
+                    fine = false;
+                    return false;
+                }
+                aux = listmedicine[i];
+                total += item * aux.PriceUnit;
+                medicines.push(
+                    {
+                        medicine_id: aux.id,
+                        quantity:    item
+                    }
+                );
+                i++;
+            });            
+            
+            payments.push({
+                payment_id: type[0].id,
+                mount: total,
+                surcharge: total * type[0].surcharge
+            });
+            if(total > 0){
+                if(fine){
+                factory.createBill(total, $scope.client.id, $scope.employee.id, $scope.drugstore.id, listmedicine, payments).then(function(res) {
+                  console.log(res);
+                });
+                }else
+                    $window.alert('Algunas cantidades solicitads sobrepasan el stock de la tienda!!');
+            }else
+                $window.alert('El monto de compra no supera la cantidad de 1.00!!');
+        }else
+            $window.alert('Tiene que buscar un cliente para realizar el pago!!!');
+        
     }
 
     //*****************************************************************************************************
@@ -53,49 +141,41 @@ angular.module('controllers', [])
         DTColumnDefBuilder.newColumnDef(3),
         DTColumnDefBuilder.newColumnDef(4)
     ];
-    vm.dtColumnDefs1 = [
-        DTColumnDefBuilder.newColumnDef(0),
-        DTColumnDefBuilder.newColumnDef(1),
-        DTColumnDefBuilder.newColumnDef(2),
-        DTColumnDefBuilder.newColumnDef(3),
-        DTColumnDefBuilder.newColumnDef(4),
-        DTColumnDefBuilder.newColumnDef(5)
-    ];
 
+    //Definition of functions for salePoint view actions
     vm.addMedicine = addMedicine;
     vm.removeMedicine = removeMedicine;
 
-    function addMedicine(med) {
-
-        vm.listmedicine.push(med);
-
+    function addMedicine(medicine) {
+        var indice = vm.listmedicine.indexOf(medicine);
+        if (indice == -1)
+            vm.listmedicine.push(medicine);
     }
 
     function removeMedicine(index, medicine) {
-        //factory.deleteMedicine(drugstore.id, medicine.id);
         vm.listmedicine.splice(index, 1);
     }
-
-    $scope.goAdmin = function () {
-        $state.go('admin');
-    }
-
 })
 
 .controller('ctrlAdmin', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
 
     var vm = this;
+    var drugstore = factory.getDrugstore();
+    var drugstore = factory.getDrugstore();
+    
     vm.medicines = [];
     vm.listmedicine = [];
-    var drugstore = factory.getDrugstore();
+    
+    
     $scope.employee = factory.getEmployee();
+    $scope.data = {};
 
     if (drugstore.id) {
         factory.getMedicines(drugstore.id);
         vm.medicines = factory.medicines;
     } else
         $state.go('index');
-    //****************************************************************************************************
+
     $scope.logout = function () {
             factory.logout();
             $state.go('index');
@@ -107,10 +187,12 @@ angular.module('controllers', [])
         DTColumnDefBuilder.newColumnDef(1),
         DTColumnDefBuilder.newColumnDef(2),
         DTColumnDefBuilder.newColumnDef(3),
-        DTColumnDefBuilder.newColumnDef(4)
+        DTColumnDefBuilder.newColumnDef(4),
+        DTColumnDefBuilder.newColumnDef(5),
+        DTColumnDefBuilder.newColumnDef(6)
     ];
 
-    vm.meicine2Add = _buildMedicine2Add(1);
+    vm.medicine2Add = _buildMedicine2Add(1);
     vm.addMedicine = addMedicine;
     vm.modifyMedicine = modifyMedicine;
     vm.removeMedicine = removeMedicine;
@@ -124,7 +206,7 @@ angular.module('controllers', [])
         };
     }
 
-    function addMedicine(med) {
+    function addMedicine() {
         vm.medicines.push(angular.copy(vm.medicine2Add));
         vm.medicine2Add = _buildMedicine2Add(vm.medicine2Add.id + 1);
     }
@@ -139,5 +221,27 @@ angular.module('controllers', [])
     function removeMedicine(index, medicine) {
         factory.deleteMedicine(drugstore.id, medicine.id, index);
         vm.medicines.splice(index, 1);
+    }
+})
+
+.controller('ctrlUser',function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    
+    $scope.logout = function () {
+            factory.logout();
+            $state.go('index');
+        }
+    
+    $scope.data = {};
+    
+    $scope.createClient = function(){
+        factory.createClient($scope.data).then(function(res) {
+            if(res.status == 200 && res.data){
+                $window.alert('Cliente:  creado satisfactoriamente');
+                $scope.data = {};
+                
+            }else
+                $window.alert('Error al crear el nuevo cliente, verifique los datos!!');
+                
+        });        
     }
 })

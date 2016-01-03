@@ -1,0 +1,91 @@
+/*
+ * @CSS3 Metro Dropdown
+ * @author Martin Ivanov
+ * @website http://wemakesitesnet
+ * @blog http://acidmartin.wordpress.com
+ * @twitter https://twitter.com/#!/wemakesitesnet
+ **/
+ 
+:root .css3-metro-dropdown option,
+:root .css3-metro-dropdown:after,
+:root .css3-metro-dropdown::after,
+:root .css3-metro-dropdown select
+{
+    color: #fff;
+}
+ 
+:root .css3-metro-dropdown select,
+:root .css3-metro-dropdown:after,
+:root .css3-metro-dropdown::after
+{
+    display: block;
+    background: #78ba00;
+}
+ 
+:root .css3-metro-dropdown select,
+:root .css3-metro-dropdown option
+{
+    padding: 8px;
+}
+ 
+:root .css3-metro-dropdown
+{
+    position: relative;
+    display: inline-block;
+    border: 0;
+}
+ 
+:root .css3-metro-dropdown::after
+{
+    content: "\25bc";
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 32px;
+    font-size: 12px;
+    line-height: 34px;
+    text-align: center;
+     
+    -webkit-pointer-events: none;
+    -moz-pointer-events: none;
+    pointer-events: none;
+}
+ 
+:root .css3-metro-dropdown select
+{
+   height: 34px;
+   border: 0;
+   vertical-align: middle;
+   font: normal 12px/14px "Segoe UI", Arial, Helvetica, Sans-serif;
+   outline: 0 none;
+}
+ 
+:root .css3-metro-dropdown option
+{
+    background: #fff;
+    color: #333;
+}
+ 
+/* more colors */
+:root .css3-metro-dropdown-color-ff1d77 select,
+:root .css3-metro-dropdown-color-ff1d77:after,
+:root .css3-metro-dropdown-color-ff1d77::after
+{
+    background: #ff1d77;
+}
+ 
+:root .css3-metro-dropdown-color-2673ec select,
+:root .css3-metro-dropdown-color-2673ec:after,
+:root .css3-metro-dropdown-color-2673ec::after
+{
+    background: #2673ec;
+}
+ 
+:root .css3-metro-dropdown-color-ff2e12 select,
+:root .css3-metro-dropdown-color-ff2e12:after,
+:root .css3-metro-dropdown-color-ff2e12::after
+{
+    background: #ff2e12;
+}
+© 2001-2016 Martin IvanovHomeBlogAbout@wemakesitesnetContactDonate
