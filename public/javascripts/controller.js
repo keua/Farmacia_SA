@@ -252,7 +252,7 @@ angular.module('controllers', [])
     $scope.createClient = function () {
         factory.createClient($scope.data).then(function (res) {
             if (res.status == 200 && res.data) {
-                $window.alert('Cliente:  creado satisfactoriamente');
+                $window.alert('Cliente creado satisfactoriamente');
                 $scope.data = {};
 
             } else
