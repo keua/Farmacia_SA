@@ -26,6 +26,7 @@ angular.module('controllers', [])
 
 /*_________________________________________________________________________________________________________*/
 .controller('ctrlSale', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    
     var vm = this;
     vm.medicines = [];
     vm.listmedicine = [];
@@ -86,7 +87,6 @@ angular.module('controllers', [])
 
     var vm = this;
     vm.medicines = [];
-    vm.listmedicine = [];
     var drugstore = factory.getDrugstore();
     $scope.employee = factory.getEmployee();
 
@@ -107,10 +107,12 @@ angular.module('controllers', [])
         DTColumnDefBuilder.newColumnDef(1),
         DTColumnDefBuilder.newColumnDef(2),
         DTColumnDefBuilder.newColumnDef(3),
-        DTColumnDefBuilder.newColumnDef(4)
+        DTColumnDefBuilder.newColumnDef(4),
+        DTColumnDefBuilder.newColumnDef(5),
+        DTColumnDefBuilder.newColumnDef(6)
     ];
 
-    vm.meicine2Add = _buildMedicine2Add(1);
+    vm.medicine2Add = _buildMedicine2Add(1);
     vm.addMedicine = addMedicine;
     vm.modifyMedicine = modifyMedicine;
     vm.removeMedicine = removeMedicine;
@@ -124,7 +126,7 @@ angular.module('controllers', [])
         };
     }
 
-    function addMedicine(med) {
+    function addMedicine() {
         vm.medicines.push(angular.copy(vm.medicine2Add));
         vm.medicine2Add = _buildMedicine2Add(vm.medicine2Add.id + 1);
     }
@@ -140,4 +142,9 @@ angular.module('controllers', [])
         factory.deleteMedicine(drugstore.id, medicine.id, index);
         vm.medicines.splice(index, 1);
     }
+})
+
+.controller('ctrlUser',function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    
+    
 })
