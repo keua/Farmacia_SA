@@ -10,7 +10,7 @@ angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatab
         .state('salePoint', {
             url: '/salePoint',
             templateUrl: 'views/salePoint.html',
-            controller: 'ctrlSale as showCase'
+            controller: 'ctrlSale as sale'
         })
         .state('admin', {
             url: '/admin',

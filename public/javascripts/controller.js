@@ -7,10 +7,10 @@ angular.module('controllers', [])
         user: 201212124,
         pass: 1234
     };
-    
-    if(factory.getEmployee().name)
+
+    if (factory.getEmployee().name)
         $state.go('salePoint');
-    
+
     $scope.login = function (data) {
         if (!data.user || !data.pass)
             $window.alert('llene los campos');
@@ -27,11 +27,15 @@ angular.module('controllers', [])
 /*_________________________________________________________________________________________________________*/
 .controller('ctrlSale', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
     var vm = this;
+    var drugstore = factory.getDrugstore();
+
     vm.medicines = [];
     vm.listmedicine = [];
-    var drugstore = factory.getDrugstore();
+
     $scope.employee = factory.getEmployee();
     $scope.drugstore = drugstore;
+    $scope.client = {};
+    $scope.data = {};
 
     if (drugstore.id) {
         factory.getMedicines(drugstore.id);
@@ -44,6 +48,25 @@ angular.module('controllers', [])
         $state.go('index');
     }
 
+    $scope.goAdmin = function () {
+        $state.go('admin');
+    }
+
+    $scope.findClient = function () {
+        if ($scope.data.client) {
+            factory.getClient($scope.data.client).then(function (res) {
+                console.log(res);
+                if (res.status == 200 && res.data)
+                    $scope.client = res.data;
+                else
+                    $window.alert('Cliente con NIT no identificado!!');
+            });
+        } else
+            $window.alert('Ingrese el nit del cliente para realizar la compra');
+    }
+
+
+
     //*****************************************************************************************************
     vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(10);
     vm.dtColumnDefs = [
@@ -53,49 +76,39 @@ angular.module('controllers', [])
         DTColumnDefBuilder.newColumnDef(3),
         DTColumnDefBuilder.newColumnDef(4)
     ];
-    vm.dtColumnDefs1 = [
-        DTColumnDefBuilder.newColumnDef(0),
-        DTColumnDefBuilder.newColumnDef(1),
-        DTColumnDefBuilder.newColumnDef(2),
-        DTColumnDefBuilder.newColumnDef(3),
-        DTColumnDefBuilder.newColumnDef(4),
-        DTColumnDefBuilder.newColumnDef(5)
-    ];
 
+    //Definition of functions for salePoint view actions
     vm.addMedicine = addMedicine;
     vm.removeMedicine = removeMedicine;
 
-    function addMedicine(med) {
-
-        vm.listmedicine.push(med);
-
+    function addMedicine(medicine) {
+        var indice = vm.listmedicine.indexOf(medicine);
+        if (indice == -1)
+            vm.listmedicine.push(medicine);
     }
 
     function removeMedicine(index, medicine) {
-        //factory.deleteMedicine(drugstore.id, medicine.id);
         vm.listmedicine.splice(index, 1);
     }
-
-    $scope.goAdmin = function () {
-        $state.go('admin');
-    }
-
 })
 
 .controller('ctrlAdmin', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
 
     var vm = this;
+    var drugstore = factory.getDrugstore();
+
     vm.medicines = [];
     vm.listmedicine = [];
-    var drugstore = factory.getDrugstore();
+
     $scope.employee = factory.getEmployee();
+    $scope.data = {};
 
     if (drugstore.id) {
         factory.getMedicines(drugstore.id);
         vm.medicines = factory.medicines;
     } else
         $state.go('index');
-    //****************************************************************************************************
+
     $scope.logout = function () {
             factory.logout();
             $state.go('index');
