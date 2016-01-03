@@ -75,15 +75,7 @@ angular.module('factories', [])
     }
 
     //'name', 'lastName', 'nit', 'phoneNumber', 'birth', 'address'
-    comun.createClient = function (name, lastName, nit, phoneNumber, birth, address) {
-        var body = {
-            name: name,
-            lastName: lastName,
-            nit: nit,
-            phoneNumber: phoneNumber,
-            birth: birth,
-            address: address
-        }
+    comun.createClient = function (body) {
         return $http.post('/Client', body)
             .success(function (res) {
                 return res;

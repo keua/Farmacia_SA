@@ -1,0 +1,59 @@
+<header>
+    <div align="right">
+        <button type="button" class="btn btn-danger" ng-click="logout()">Logout</button>
+    </div>
+    <br>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+
+            <ul class="nav navbar-nav" align="left" valign="center">
+                <li><a href="#/salePoint">Home</a></li>
+                <li><a href="#/admin">Gestion de medicinas</a></li>
+                <li><a href="#/UserRegister">Registro</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+</header>
+<div class="row">
+    <div class=".col-sm-8 .col-sm-pull-4">
+        <div class="container">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><span ng-click="show2(employee)">Atendiendo {{employee.name}}, Farmacia {{drugstore.name}}</span></div>
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <!-- name,lastname,nit,phonenumber,birth,address -->
+                                <label for="InputName">Nombre</label>
+                                <input type="text+" class="form-control" ng-model="data.name" id="name" placeholder="Nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputLastname">Apellido</label>
+                                <input type="text" class="form-control" id="lastname" ng-model="data.lastName" placeholder="Apellido">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputNit">NIT</label>
+                                <input type="text" class="form-control" id="nit" ng-model="data.nit" placeholder="Nit">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPhone">Número Telefonico</label>
+                                <input type="tel" class="form-control" id="phone" ng-model="data.phoneNumber" placeholder="Numero Telefonico">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputBirth">Nacimiento</label>
+                                <input type="date" class="form-control" id="birth" ng-model="data.birth" placeholder="Nacimiento">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress">Dirección</label>
+                                <input type="textarea" class="form-control" ng-model="data.address" id="address" placeholder="Direccion">
+                            </div>
+                            <button type="submit" ng-click="createClient()" class="btn btn-primary">Registrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

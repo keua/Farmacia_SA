@@ -11,7 +11,10 @@ function setup(db, cb) {
     require('./Employee')(orm, db);
     require('./Bill')(orm, db);
     require('./PaymentType')(orm, db);
-    require('./Payment')(orm, db);
+    require('./Payment')(orm, db);    
+    require('./CallCenter')(orm, db);    
+    require('./Operator')(orm, db);
+    require('./Order')(orm, db);
     return cb(null, db);
 }
 

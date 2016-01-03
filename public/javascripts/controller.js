@@ -26,6 +26,7 @@ angular.module('controllers', [])
 
 /*_________________________________________________________________________________________________________*/
 .controller('ctrlSale', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    
     var vm = this;
     var drugstore = factory.getDrugstore();
 
@@ -36,6 +37,8 @@ angular.module('controllers', [])
     $scope.drugstore = drugstore;
     $scope.client = {};
     $scope.data = {};
+    $scope.total = 0;
+    $scope.itemValue = [];
 
     if (drugstore.id) {
         factory.getMedicines(drugstore.id);
@@ -65,7 +68,23 @@ angular.module('controllers', [])
             $window.alert('Ingrese el nit del cliente para realizar la compra');
     }
 
-
+    $scope.sum = function(list, ls) {
+        var total=0;
+        var i = 0;
+          angular.forEach(list , function(item){
+              total+= item*ls[i].PriceUnit;
+              i++;
+          });
+          return total;
+     }
+    
+     $scope.mount = function(price) {
+         var val = 0;         
+         val = price ;
+         console.log(val);
+         return val;         
+     }
+     
 
     //*****************************************************************************************************
     vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(10);
@@ -96,10 +115,12 @@ angular.module('controllers', [])
 
     var vm = this;
     var drugstore = factory.getDrugstore();
-
+    var drugstore = factory.getDrugstore();
+    
     vm.medicines = [];
     vm.listmedicine = [];
-
+    
+    
     $scope.employee = factory.getEmployee();
     $scope.data = {};
 
@@ -120,10 +141,12 @@ angular.module('controllers', [])
         DTColumnDefBuilder.newColumnDef(1),
         DTColumnDefBuilder.newColumnDef(2),
         DTColumnDefBuilder.newColumnDef(3),
-        DTColumnDefBuilder.newColumnDef(4)
+        DTColumnDefBuilder.newColumnDef(4),
+        DTColumnDefBuilder.newColumnDef(5),
+        DTColumnDefBuilder.newColumnDef(6)
     ];
 
-    vm.meicine2Add = _buildMedicine2Add(1);
+    vm.medicine2Add = _buildMedicine2Add(1);
     vm.addMedicine = addMedicine;
     vm.modifyMedicine = modifyMedicine;
     vm.removeMedicine = removeMedicine;
@@ -137,7 +160,7 @@ angular.module('controllers', [])
         };
     }
 
-    function addMedicine(med) {
+    function addMedicine() {
         vm.medicines.push(angular.copy(vm.medicine2Add));
         vm.medicine2Add = _buildMedicine2Add(vm.medicine2Add.id + 1);
     }
@@ -152,5 +175,22 @@ angular.module('controllers', [])
     function removeMedicine(index, medicine) {
         factory.deleteMedicine(drugstore.id, medicine.id, index);
         vm.medicines.splice(index, 1);
+    }
+})
+
+.controller('ctrlUser',function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    
+    $scope.data = {};
+    
+    $scope.createClient = function(){
+        factory.createClient($scope.data).then(function(res) {
+            if(res.status == 200 && res.data){
+                $window.alert('Cliente:  creado satisfactoriamente');
+                $scope.data = {};
+                
+            }else
+                $window.alert('Error al crear el nuevo cliente, verifique los datos!!');
+                
+        });        
     }
 })

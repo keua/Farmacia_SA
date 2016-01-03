@@ -1,17 +1,17 @@
 <header>
+    <div align="right">
+        <button type="button" class="btn btn-danger" ng-click="logout()">Logout</button>
+    </div>
+    <br>
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
-
             <ul class="nav navbar-nav" align="left" valign="center">
-                <li align="center" valign="center">
-                    <button type="button" class="btn btn-danger" ng-click="logout()">Logout</button>
-                </li>
+                <li><a href="#/salePoint">Home</a></li>
                 <li><a href="" ng-click="goAdmin()">Gestion de medicinas</a></li>
+                <li><a href="#/UserRegister">Registro</a></li>
             </ul>
-
         </div>
     </nav>
-
 </header>
 <div class="row">
     <div class=".col-sm-8 .col-sm-pull-4">
@@ -61,6 +61,9 @@
                                 </div>
                                 <button type="submit" ng-click="findClient()" class="btn btn-default">Buscar</button>
                                 <div align="right">
+                                   <p>
+                                       <h3>Total. </h3>{{sum(itemValue,sale.listmedicine)}}
+                                   </p>
                                     <button type="submit" ng-click="findClient()" class="btn btn-warning btn-lg"><i class="fa fa-shopping-cart"></i></button>
                                 </div>
                                 <div>
@@ -110,15 +113,16 @@
                                         <td>{{ medicine.description }}</td>
                                         <td>{{ medicine.PriceUnit }}</td>
                                         <td>
-                                            <input type="number" id={{medicine.id}} name="quantity" value="1" align="center">
+                                            <input type="number" ng-model="itemValue[$index]" id={{medicine.id}} name="quantity" value="1"
+                                             align="center">
                                         </td>
-                                        <td>{{medicine.PriceUnit * 2}}</td>
+                                        <td>{{medicine.PriceUnit * itemValue[$index]}}</td>
                                         <td align="center">
                                             <button type="button" ng-click="sale.removeMedicine($index, medicine)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table>                            
                         </div>
                     </div>
                 </div>
