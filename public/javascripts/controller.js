@@ -121,7 +121,11 @@ angular.module('controllers', [])
             if(total > 0){
                 if(fine){
                 factory.createBill(total, $scope.client.id, $scope.employee.id, $scope.drugstore.id, listmedicine, payments).then(function(res) {
-                  console.log(res);
+                    console.log(res);
+                    vm.listmedicine = [];
+                    $scope.client = {};
+                    $scope.itemValue = [];
+                    
                 });
                 }else
                     $window.alert('Algunas cantidades solicitads sobrepasan el stock de la tienda!!');
