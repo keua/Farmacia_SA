@@ -80,16 +80,16 @@ angular.module('controllers', [])
         $scope.data.total = total;
         return total;
     }
-    
-    $scope.surcharge = function(){
+
+    $scope.surcharge = function () {
         var type
-        if($scope.data.paymentType){
+        if ($scope.data.paymentType) {
             type = JSON.parse($scope.data.paymentType);
             $scope.data.surcharge = ($scope.data.total * type.surcharge).toFixed(2);
             return $scope.data.surcharge;
         }
         return 0;
-        
+
     }
 
     $scope.pay = function (itemValue, listmedicine) {
@@ -139,13 +139,13 @@ angular.module('controllers', [])
         } else
             $window.alert('Tiene que buscar un cliente para realizar el pago!!!');
     }
-    
-    function cleanMount(){
+
+    function cleanMount() {
         vm.listmedicine = [];
         $scope.client = {};
         $scope.itemValue = [];
-        $scope.data.total =0;
-        $scope.data.surcharge =0;        
+        $scope.data.total = 0;
+        $scope.data.surcharge = 0;
     }
 
     //*****************************************************************************************************
