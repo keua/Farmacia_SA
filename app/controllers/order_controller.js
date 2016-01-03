@@ -58,35 +58,57 @@ module.exports = {
                 else
                     return next(err);
             } else {
-                order.getMedicines({id: req.params.medicine_id},function (err, medicine) {
+                order.getMedicines({id: req.params.medicine_id},
+                    function (err, medicineFromOrder) {
                     if (err) {
                         if (err.code == orm.ErrorCodes.NOT_FOUND)
                             res.send(404, "Medicine not found 1");
                         else
                             return next(err);
                     }
-                    req.db.driver.execQuery("SELECT quantity FROM drugstore_medicines WHERE medicines_id=? AND drugstore_id=?",
-                        [medicine[0].id, medicine[0].drugstoreId], function (err, drug_med) 
+                    req.models.drugstore.get(medicineFromOrder[0].drugstoreId,
+                        function (err, drugstore) 
                         {
-                            if(drug_med[0])
-                            {    
-                                var difference = medicine[0].extra.quantity - params.quantity;
-                                difference = drug_med[0].quantity + difference;
-                                console.log(" "+medicine[0].quantity);
-                                req.db.driver.execQuery(
-                                  "UPDATE drugstore_medicines set quantity = ?, PriceUnit=? WHERE medicines_id=? AND drugstore_id=?",
-                                  [difference,params.PriceUnit, medicine[0].id, medicine[0].drugstoreId],
-                                  function (err, data) { 
-                                      if(err)
-                                          console.log(err);
+                            if (err) {
+                                if (err.code == orm.ErrorCodes.NOT_FOUND)
+                                    res.send(404, "Drugstore not found 1");
+                                else
+                                    return next(err);
+                            } 
+                            else 
+                            {
+                                drugstore.getMedicines({id: req.params.medicine_id},     
+                                function (err, medicineToUpdate) 
+                                {
+                                    if (err) 
+                                    {
+                                        if (err.code == orm.ErrorCodes.NOT_FOUND)
+                                            res.send(404, "Medicine not found 1");
+                                        else
+                                            return next(err);
+                                    }
+                                    var difference = medicineFromOrder[0].quantity - params.quantity;
+                                    difference = medicineToUpdate[0].quantity + difference;             
+                                    req.db.driver.execQuery(
+                                      "UPDATE drugstore_medicines set quantity = ?, PriceUnit=? WHERE medicines_id=? AND drugstore_id=?",
+                                      [difference,params.PriceUnit, medicineFromOrder[0].id, medicineFromOrder[0].drugstoreId],
+                                      function (err, data) { 
+                                          if(err)
+                                              console.log(err);
+                                    })
+                                    
+                                    req.db.driver.execQuery(
+                                      "UPDATE order_medicines set quantity = ?, PriceUnit=? WHERE medicines_id=? AND drugstoreId=?",
+                                      [params.quantity,params.PriceUnit, medicineFromOrder[0].id, medicineFromOrder[0].drugstoreId],
+                                      function (err, data) { 
+                                          if(err)
+                                              console.log(err);
+                                    });
+
                                 });
-
                             }
-
-                        });
-                    medicine[0].extra.quantity = params.quantity;
-                    medicine[0].extra.PriceUnit =  params.PriceUnit;
-                    return res.send(200, medicine[0]);
+                        });                         
+                    return res.send(200, medicineFromOrder[0]);
                 });
             }
         });
