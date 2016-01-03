@@ -180,6 +180,11 @@ angular.module('controllers', [])
 
 .controller('ctrlUser',function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
     
+    $scope.logout = function () {
+            factory.logout();
+            $state.go('index');
+        }
+    
     $scope.data = {};
     
     $scope.createClient = function(){

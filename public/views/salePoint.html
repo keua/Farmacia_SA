@@ -61,9 +61,9 @@
                                 </div>
                                 <button type="submit" ng-click="findClient()" class="btn btn-default">Buscar</button>
                                 <div align="right">
-                                   <p>
-                                       <h3>Total. </h3>{{sum(itemValue,sale.listmedicine)}}
-                                   </p>
+                                    <p>
+                                        <h3>Total. </h3>{{sum(itemValue,sale.listmedicine)}}
+                                    </p>
                                     <button type="submit" ng-click="findClient()" class="btn btn-warning btn-lg"><i class="fa fa-shopping-cart"></i></button>
                                 </div>
                                 <div>
@@ -90,6 +90,17 @@
                                                 <th><span>Telefono:</span></th>
                                                 <th><span>{{client.phoneNumber}}</span> </th>
                                             </tr>
+                                            <tr>
+                                                <span class="css3-metro-dropdown css3-metro-dropdown-color-ff2e12">
+    <select name="dropdown-4">
+        <option value="0">Guitars</option>
+        <option value="1">B.C. Rich</option>        
+        <option value="2">ESP</option>
+        <option value="3">Ibanez</option>
+        <option value="4">Jackson</option>
+    </select>
+</span>
+                                            </tr>
                                         </tbody>
                                     </table>
                                     <br>
@@ -113,8 +124,7 @@
                                         <td>{{ medicine.description }}</td>
                                         <td>{{ medicine.PriceUnit }}</td>
                                         <td>
-                                            <input type="number" ng-model="itemValue[$index]" id={{medicine.id}} name="quantity" value="1"
-                                             align="center">
+                                            <input type="number" ng-model="itemValue[$index]" id={{medicine.id}} name="quantity" value="1" align="center">
                                         </td>
                                         <td>{{medicine.PriceUnit * itemValue[$index]}}</td>
                                         <td align="center">
@@ -122,7 +132,7 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>                            
+                            </table>
                         </div>
                     </div>
                 </div>
