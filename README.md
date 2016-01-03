@@ -54,3 +54,19 @@ Once the server is running, open the project in the shape of 'https://projectnam
         }
     ]
 }
+
+GIT COMMANDS
+
+Revertir version 
+git reset --hard <old-commit-id>
+git push -f <remote-name> <branch-name> 
+
+Para hacer commits (en teoria no deberian de haber conflictos porque cada quien estara trabajando en modulos distintos)
+
+    git pull origin master
+
+    git add -A
+
+    git commit -m "breve comentario sobre el commit"
+
+    git push origin master
