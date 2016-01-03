@@ -15,7 +15,7 @@ module.exports = function (orm, db) {
     }, {
         validations: {},
         methods: {}
-        });
+    });
     Order.hasOne('drugstore', db.models.drugstore, {
         required: true,
         reverse: 'orders'
@@ -45,7 +45,7 @@ module.exports = function (orm, db) {
     }, {
         reverse: 'orders',
         key: true
-    });    
+    });
 
     db.sync(function (err) {
         if (err) throw err;

@@ -128,7 +128,12 @@ app.put('/CallCenter/:id', controllers.callcenter.updateCallCenter);
 /*
     Order
 */
+
+app.get('/OrderMedicines/:id', controllers.order.getMedicinesbyOrder);
+
 app.get('/OrderDrugstore/:drugstore_id', controllers.order.getOrderbySucursal);
+
+app.get('/AllOrder', controllers.order.getAllOrder);
 
 app.get('/Order/:id', controllers.order.getOrder);
 
@@ -137,5 +142,7 @@ app.post('/Order', controllers.order.createOrder);
 app.put('/OrderMedicine/:order_id/:medicine_id', controllers.order.updateOrderMedicine);
 
 app.delete('/OrderMedicine/:order_id/:medicine_id', controllers.order.deleteOrderMedicine);
+
+app.delete('/OrderDelete/:order_id', controllers.order.deleteOrder);
 
 module.exports = app;

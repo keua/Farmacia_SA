@@ -9,7 +9,7 @@ angular.module('controllers', [])
     };
 
     if (factory.getEmployee())
-        if(factory.getEmployee().name)
+        if (factory.getEmployee().name)
             $state.go('salePoint');
 
     $scope.login = function (data) {
@@ -178,8 +178,6 @@ angular.module('controllers', [])
 
     var vm = this;
     var drugstore = factory.getDrugstore();
-    var drugstore = factory.getDrugstore();
-
     vm.medicines = [];
     vm.listmedicine = [];
 
@@ -263,47 +261,125 @@ angular.module('controllers', [])
     }
 })
 
-.controller('ctrlUser',function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
-    
+.controller('ctrlUser', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+
     $scope.logout = function () {
-            factory.logout();
-            $state.go('index');
-        }
-    
+        factory.logout();
+        $state.go('index');
+    }
+
     $scope.data = {};
-    
-    $scope.createClient = function(){
-        factory.createClient($scope.data).then(function(res) {
-            if(res.status == 200 && res.data){
+
+    $scope.createClient = function () {
+        factory.createClient($scope.data).then(function (res) {
+            if (res.status == 200 && res.data) {
                 $window.alert('Cliente:  creado satisfactoriamente');
                 $scope.data = {};
-                
-            }else
+
+            } else
                 $window.alert('Error al crear el nuevo cliente, verifique los datos!!');
-                
-        });        
+
+        });
     }
 })
 
 
-.controller('ctrOrder',function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
-    
-    $scope.logout = function () {
-            factory.logout();
-            $state.go('index');
+.controller('ctrlIndexCC', function ($scope, $state, $window, factory) {
+
+    $scope.medicines = [];
+    $scope.data = {
+        name: 'tomochan'
+    };
+
+    if (factory.getEmployee())
+        if (factory.getEmployee().name)
+            $state.go('homeCC');
+
+    $scope.login = function () {
+        if (!$scope.data.name)
+            $window.alert('llene los campos');
+        else {
+            factory.loginCC($scope.data.name, function (res) {
+                if (res.name) $state.go('homeCC');
+                else
+                    $window.alert('Crendenciales incorrectas');
+            });
         }
-    
+    }
+})
+
+.controller('ctrlHomeCC', function ($scope, $state, $window, factory) {
+    $scope.operator = factory.getOperator();
+
+    $scope.logout = function () {
+        factory.logoutCC();
+        $state.go('indexCC');
+    }
+
+    if (!$scope.operator.name)
+        $state.go('indexCC');
+
+
+})
+
+.controller('ctrlOrder', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+    var vm = this;
     $scope.data = {};
-    
-    $scope.createClient = function(){
-        factory.createClient($scope.data).then(function(res) {
-            if(res.status == 200 && res.data){
+
+    factory.getAllOrder();
+    vm.orders = factory.orders;
+    vm.details = [];
+
+
+    $scope.logout = function () {
+        factory.logout();
+        $state.go('index');
+    }
+
+    $scope.createClient = function () {
+        factory.createClient($scope.data).then(function (res) {
+            if (res.status == 200 && res.data) {
                 $window.alert('Cliente:  creado satisfactoriamente');
                 $scope.data = {};
-                
-            }else
+
+            } else
                 $window.alert('Error al crear el nuevo cliente, verifique los datos!!');
-                
-        });        
+
+        });
     }
+
+    vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(10);
+    vm.dtColumnDefs = [
+        DTColumnDefBuilder.newColumnDef(0),
+        DTColumnDefBuilder.newColumnDef(1),
+        DTColumnDefBuilder.newColumnDef(2),
+        DTColumnDefBuilder.newColumnDef(3),
+        DTColumnDefBuilder.newColumnDef(4),
+        DTColumnDefBuilder.newColumnDef(5),
+        DTColumnDefBuilder.newColumnDef(6)
+    ];
+
+    vm.dtColumnDefs1 = [
+        DTColumnDefBuilder.newColumnDef(0),
+        DTColumnDefBuilder.newColumnDef(1),
+        DTColumnDefBuilder.newColumnDef(2),
+        DTColumnDefBuilder.newColumnDef(3)
+
+    ];
+    //deleteOrder
+    vm.removeOrder = removeOrder;
+    vm.detalle = detalle;
+
+    function removeOrder(index, order) {
+        vm.details = [];
+        factory.deleteOrder(order, index);
+        vm.orders.splice(index, 1);
+    }
+
+    function detalle(order) {
+        factory.details(order);
+        vm.details = factory.detailsOrder;
+    }
+
+
 })
