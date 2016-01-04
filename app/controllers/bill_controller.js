@@ -38,6 +38,7 @@ module.exports = {
                         else
                             return next(err);
                     }
+                    
                     //checkMedicines(req, res, next, drugstore, otherParams.medicines);
                     addMedicines(req, res, next, drugstore, bill, otherParams.medicines);
                 });
@@ -72,7 +73,6 @@ module.exports = {
         Función para agregar medicinas a una factura
     */
 function addMedicines(req, res, next, drugstore, bill, medicines) {
-    console.log('Hola mundo', medicines)
     var params = {};
     var difference = 0;
     if (drugstore && bill) {
@@ -88,6 +88,7 @@ function addMedicines(req, res, next, drugstore, bill, medicines) {
                 }
                 if (med[0]) {
                     difference = med[0].extra.quantity - medicine.quantity;
+                    console.log(difference)
                     if (difference < 0) {
                         difference = 0;
                         medicine.quantity = med[0].extra.quantity;
@@ -110,11 +111,12 @@ function addMedicines(req, res, next, drugstore, bill, medicines) {
                                 if (err)
                                     console.log(err);
                             }),
+                        
                         med[0].extra.quantity = difference;
-                    med[0].save(function (err) {
+                        med[0].save(function (err) {
                         if (err)
                             return next(err);
-                    });
+                        });
 
                 } else
                     res.send(404, "Medicine of drugstore: " + drugstore.id + " not found");

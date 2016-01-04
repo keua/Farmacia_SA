@@ -35,12 +35,12 @@ angular.module('controllers', [])
     vm.listmedicine = [];
 
     $scope.employee = factory.getEmployee();
-    $scope.drugstore = drugstore;
+    $scope.drugstore = factory.getDrugstore();;
     $scope.client = {};
     $scope.data = {};
     $scope.itemValue = [];
 
-    if (drugstore.id) {
+    if ($scope.drugstore.id && $scope.employee.name) {
         factory.getMedicines(drugstore.id);
         vm.medicines = factory.medicines;
     } else
@@ -126,10 +126,11 @@ angular.module('controllers', [])
                 mount: total,
                 surcharge: $scope.data.surcharge
             });
+            total = parseFloat($scope.data.total) + parseFloat($scope.data.surcharge);
             if (total > 0) {
                 if (fine) {
                     total = parseFloat($scope.data.total) + parseFloat($scope.data.surcharge);
-                    factory.createBill(total, $scope.client.id, $scope.employee.id, $scope.drugstore.id, listmedicine, payments).then(function (res) {
+                    factory.createBill(total, $scope.client.id, $scope.employee.id, $scope.drugstore.id, medicines, payments).then(function (res) {
                         console.log(res);
                         cleanMount();
                     });
@@ -174,8 +175,9 @@ angular.module('controllers', [])
 
     function addMedicine(medicine) {
         var indice = vm.listmedicine.indexOf(medicine);
-        if (indice == -1)
+        if (indice == -1){
             vm.listmedicine.push(medicine);
+        }            
     }
 
     function removeMedicine(index, medicine) {

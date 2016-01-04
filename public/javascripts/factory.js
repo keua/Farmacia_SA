@@ -110,6 +110,7 @@ angular.module('factories', [])
     
     /*CREAR FACTURAS*/
     comun.createBill = function (mount, client_id, employee_id, drugstore_id, medicines, payments) {
+        console.log(medicines);
         console.log(employee_id);
         var body = {
             mount: mount,
