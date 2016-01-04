@@ -115,7 +115,6 @@ angular.module('factories', [])
                 return res;
             });
     }
-<<<<<<< HEAD
     /** --------------------------- Desarrollo JoseEstrada --------**/
     
 
@@ -143,8 +142,6 @@ angular.module('factories', [])
                 return res;
             });
     }
-=======
-
     /*CALCENTER*/
     comun.loginCC = function (nombre, callback) {
         return $http.get('/Operator/' + nombre)
@@ -185,7 +182,5 @@ angular.module('factories', [])
                 return comun.detailsOrder;
             });
     }
-
->>>>>>> 265d969659f906a6568eba86dd9c784b1df66428
     return comun;
 })

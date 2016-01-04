@@ -20,7 +20,7 @@ angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatab
         .state('orderManager', {
             url: '/orderManager',
             templateUrl: 'views/orderManager.html',
-            controller: 'ctrlOrder as theOrder'
+            controller: 'ctrlOrderManager as theOrder'
         })
         .state('admin', {
             url: '/admin',

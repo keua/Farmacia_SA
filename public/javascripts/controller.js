@@ -9,12 +9,9 @@ angular.module('controllers', [])
     };
 
     if (factory.getEmployee())
-<<<<<<< HEAD
         $state.go('salePoint');
-=======
         if (factory.getEmployee().name)
             $state.go('salePoint');
->>>>>>> 265d969659f906a6568eba86dd9c784b1df66428
 
     $scope.login = function (data) {
         if (!data.user || !data.pass)
@@ -191,10 +188,6 @@ angular.module('controllers', [])
 
     var vm = this;
     var drugstore = factory.getDrugstore();
-<<<<<<< HEAD
-    
-=======
->>>>>>> 265d969659f906a6568eba86dd9c784b1df66428
     vm.medicines = [];
     vm.listmedicine = [];
 
@@ -317,7 +310,7 @@ angular.module('controllers', [])
             $window.alert('llene los campos');
         else {
             factory.loginCC($scope.data.name, function (res) {
-                if (res.name) $state.go('homeCC');
+                if (res) $state.go('homeCC');
                 else
                     $window.alert('Crendenciales incorrectas');
             });
@@ -392,17 +385,16 @@ angular.module('controllers', [])
         factory.deleteOrder(order, index);
         vm.orders.splice(index, 1);
     }
-<<<<<<< HEAD
 })
 /*_________________________________________________________________________________________________________*/
-.controller('ctrlOrder', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+.controller('ctrlOrderManager', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
     
     var vm = this;
 
     vm.medicines = [];
     vm.listmedicine = [];
 
-    $scope.employee = factory.getEmployee();
+    $scope.operator = factory.getOperator();
     $scope.client = {};
     $scope.data = {};
     $scope.drugstore = {};
@@ -422,7 +414,7 @@ angular.module('controllers', [])
                                                              return this;
                                                         }
                                //medicine.push( "drugstore_id", drugstore.id );                                
-                                medicine.push( "drugstore_name", drugstore.name );
+                               // medicine.push( "drugstore_name", drugstore.name );
                                 vm.medicines.push(medicine);
                             })
 
@@ -504,7 +496,7 @@ angular.module('controllers', [])
                 {
                     var dateNow = new Date();///.format('yyyy-MM-dd');//$filter('date')(new Date(), 'yyyy-MM-dd');
                     //totalAmount, isCanceled, dateEmited, client_id, operator_id, medicines,drugstore_id
-                    factory.createOrder(total,false, dateNow, $scope.client.id, $scope.employee.id, medicines, type.id).then(function(salida)
+                    factory.createOrder(total,false, dateNow, $scope.client.id, $scope.operator.id, medicines, type.id).then(function(salida)
                         {    
                             //console.log(salida);                            
                             vm.listmedicine = [];
@@ -544,13 +536,8 @@ angular.module('controllers', [])
     function removeMedicine(index, medicine) {
         vm.listmedicine.splice(index, 1);
     }
-=======
-
     function detalle(order) {
         factory.details(order);
         vm.details = factory.detailsOrder;
     }
-
-
->>>>>>> 265d969659f906a6568eba86dd9c784b1df66428
 })

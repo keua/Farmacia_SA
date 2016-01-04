@@ -16,10 +16,10 @@ module.exports = function (orm, db) {
         validations: {},
         methods: {}
     });
-    Order.hasOne('drugstore', db.models.drugstore, {
+    /*Order.hasOne('drugstore', db.models.drugstore, {
         required: true,
         reverse: 'orders'
-    });
+    });*/
     Order.hasOne('operator', db.models.operator, {
         required: true,
         reverse: 'orders'
