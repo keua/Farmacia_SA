@@ -366,7 +366,8 @@ angular.module('controllers', [])
         DTColumnDefBuilder.newColumnDef(3),
         DTColumnDefBuilder.newColumnDef(4),
         DTColumnDefBuilder.newColumnDef(5),
-        DTColumnDefBuilder.newColumnDef(6)
+        DTColumnDefBuilder.newColumnDef(6),
+        DTColumnDefBuilder.newColumnDef(7)
     ];
 
     vm.dtColumnDefs1 = [
