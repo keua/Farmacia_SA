@@ -28,7 +28,7 @@ angular.module('factories', [])
                 return comun.medicines;
             });
     }
-    
+
     comun.getMedicinesCallback = function (drugstore_id, callback) {
         return $http.get('/DrugstoreMedicine/' + drugstore_id)
             .success(function (res) {
@@ -107,31 +107,31 @@ angular.module('factories', [])
                 return res;
             });
     }
-    
+
     /*CREAR FACTURAS*/
     comun.createBill = function (mount, client_id, employee_id, drugstore_id, medicines, payments) {
-        console.log(medicines);
-        console.log(employee_id);
-        var body = {
-            mount: mount,
-            client_id: client_id,
-            employee_id: employee_id,
-            drugstore_id: drugstore_id,
-            medicines: medicines,
-            payments: payments
+            console.log(medicines);
+            console.log(employee_id);
+            var body = {
+                mount: mount,
+                client_id: client_id,
+                employee_id: employee_id,
+                drugstore_id: drugstore_id,
+                medicines: medicines,
+                payments: payments
+            }
+            return $http.post('/Bill', body)
+                .success(function (res) {
+                    return res;
+                });
         }
-        return $http.post('/Bill', body)
-            .success(function (res) {
-                return res;
-            });
-    }
-    /** --------------------------- Desarrollo JoseEstrada --------**/
-    
+        /** --------------------------- Desarrollo JoseEstrada --------**/
+
 
     /*OBTENER Sucursales*/
     comun.getDrugstoreFromWS = function (callback) {
         return $http.get('/Drugstore')
-            .success(function (res){
+            .success(function (res) {
                 /*angular.forEach(res, function(drugstore){
                     comun.getMedicines(drugstore.id).then(function(medicines){
                         angular.copy(comun.medicines, comun.listDrugstore);  
@@ -140,25 +140,25 @@ angular.module('factories', [])
                 return res;
             });
     }
-    
-    
+
+
     /*CREAR PEDIDOS*/
-    comun.createOrder = function (totalAmount, isCanceled, dateEmited, client_id, operator_id, medicines,drugstore_id) {
-        var body = {
-            totalAmount: totalAmount,
-            isCanceled: isCanceled,
-            dateEmited: dateEmited,
-            client_id: client_id,
-            operator_id: operator_id,
-            medicines: medicines,
-            drugstore_id : drugstore_id
+    comun.createOrder = function (totalAmount, isCanceled, dateEmited, client_id, operator_id, medicines, drugstore_id) {
+            var body = {
+                totalAmount: totalAmount,
+                isCanceled: isCanceled,
+                dateEmited: dateEmited,
+                client_id: client_id,
+                operator_id: operator_id,
+                medicines: medicines,
+                drugstore_id: drugstore_id
+            }
+            return $http.post('/Order', body)
+                .success(function (res) {
+                    return res;
+                });
         }
-        return $http.post('/Order', body)
-            .success(function (res) {
-                return res;
-            });
-    }
-    /*CALCENTER*/
+        /*CALCENTER*/
     comun.loginCC = function (nombre, callback) {
         return $http.get('/Operator/' + nombre)
             .success(function (res) {

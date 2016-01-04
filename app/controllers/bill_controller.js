@@ -38,7 +38,7 @@ module.exports = {
                         else
                             return next(err);
                     }
-                    
+
                     //checkMedicines(req, res, next, drugstore, otherParams.medicines);
                     addMedicines(req, res, next, drugstore, bill, otherParams.medicines);
                 });
@@ -111,12 +111,12 @@ function addMedicines(req, res, next, drugstore, bill, medicines) {
                                 if (err)
                                     console.log(err);
                             }),
-                        
+
                         med[0].extra.quantity = difference;
-                        med[0].save(function (err) {
+                    med[0].save(function (err) {
                         if (err)
                             return next(err);
-                        });
+                    });
 
                 } else
                     res.send(404, "Medicine of drugstore: " + drugstore.id + " not found");
