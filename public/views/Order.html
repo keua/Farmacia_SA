@@ -27,6 +27,7 @@
                                     <th>No. Orden</th>
                                     <th>Cliente</th>
                                     <th>Generado por</th>
+                                    <th>Sucursal</th>
                                     <th>Fecha</th>
                                     <th>Total</th>
                                     <th>Detalle</th>
@@ -35,14 +36,16 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="ord in order.orders">
-                                     <td>{{ ord.id }}</td>
-                                    <td>{{ ord.client_id }}</td>
+                                    <td>{{ ord.id }}</td>
+                                    <td>{{ ord.client.name }}</td>
                                     <td>{{ ord.operator_id }}</td>
+                                    <td>{{ ord.drugstore.name }}</td>
                                     <td>{{ ord.dateEmited }}</td>
                                     <td>{{ ord.totalAmount }}</td>
-                                    <td>   <button type="button" ng-click="order.detalle(ord)" class="btn btn-success"><i class="fa fa-plus"></i></td>
                                     <td>
-                                      <button type="button" ng-click="order.removeOrder($index, ord)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                                        <button type="button" ng-click="order.detalle(ord)" class="btn btn-success"><i class="fa fa-plus"></i></td>
+                                    <td>
+                                        <button type="button" ng-click="order.removeOrder($index, ord)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -73,7 +76,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="ord in order.details">
-                                     <td>{{ ord.name }}</td>
+                                    <td>{{ ord.name }}</td>
                                     <td>{{ ord.description }}</td>
                                     <td>{{ ord.quantity }}</td>
                                     <td>{{ ord.PriceUnit }}</td>

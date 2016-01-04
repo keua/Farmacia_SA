@@ -61,9 +61,9 @@ module.exports = {
                 });
             });
         },
-    
-            getMedicinesbyOrder: function (req, res, next) {
-           req.models.order.find({
+
+        getMedicinesbyOrder: function (req, res, next) {
+            req.models.order.find({
                 id: req.params.id
             }, function (err, order) {
                 if (err) {
@@ -72,7 +72,7 @@ module.exports = {
                     else
                         return next(err);
                 }
-                var lista = [];
+
                 order.forEach(function (order) {
                     req.models.order.get(order.id, function (err, order) {
                         if (err) {
@@ -92,14 +92,15 @@ module.exports = {
                                 order.medicines = medicines;
                                 res.send(200, order.medicines);
                             });
-                            
+
                         } else
                             res.send(404, 'Order not found 2');
                     });
                 });
             });
-        }
-    ,
+        },
+
+
         getAllOrder: function (req, res, next) {
             req.models.order.find({}, function (err, order) {
                 if (err) {
@@ -108,9 +109,46 @@ module.exports = {
                     else
                         return next(err);
                 }
+
+
+                order.forEach(function (order) {
+                    if (err) {
+                        if (err.code == orm.ErrorCodes.NOT_FOUND)
+                            res.send(404, "oder not found");
+                        else
+                            return next(err);
+                    }
+                    if (order) {
+                        req.models.drugstore.get(order.drugstore_id, function (err, drugstore) {
+                            if (err) {
+                                if (err.code == orm.ErrorCodes.NOT_FOUND)
+                                    res.send(404, "Medicines not found in the Order");
+                                else
+                                    return next(err);
+                            }
+                            req.models.client.get(order.client_id, function (err, client) {
+                                if (err) {
+                                    if (err.code == orm.ErrorCodes.NOT_FOUND)
+                                        res.send(404, "Medicines not found in the Order");
+                                    else
+                                        return next(err);
+                                }
+                                order.drugstore = drugstore;
+                                order.client = client;
+                            });
+                        });
+
+
+                    } else
+                        res.send(404, 'Order not found 2');
+
+                });
                 res.send(200, order);
             });
-        },
+        }
+
+
+        ,
         getOrder: function (req, res, next) {
             req.models.order.get(req.params.id, function (err, order) {
                 if (err) {
@@ -195,19 +233,19 @@ module.exports = {
                 }
             });
         },
-    deleteOrder: function (req, res, next) {
-        req.models.order.find({
-        id: req.params.order_id
-        }).remove(function (err) {
-        if (err) {
-            if (err.code == orm.ErrorCodes.NOT_FOUND)
-                res.send(404, "oder not found");
-            else
-                return next(err);
+        deleteOrder: function (req, res, next) {
+            req.models.order.find({
+                id: req.params.order_id
+            }).remove(function (err) {
+                if (err) {
+                    if (err.code == orm.ErrorCodes.NOT_FOUND)
+                        res.send(404, "oder not found");
+                    else
+                        return next(err);
                 }
             });
-         return res.send(200, 'ok');
-        }         ,
+            return res.send(200, 'ok');
+        },
 
         deleteOrderMedicine: function (req, res, next) {
             req.models.medicine.get(req.params.medicine_id, function (err, medicine) {
