@@ -72,6 +72,7 @@ module.exports = {
         Función para agregar medicinas a una factura
     */
 function addMedicines(req, res, next, drugstore, bill, medicines) {
+    console.log('Hola mundo', medicines)
     var params = {};
     var difference = 0;
     if (drugstore && bill) {

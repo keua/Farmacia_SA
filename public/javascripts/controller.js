@@ -9,7 +9,6 @@ angular.module('controllers', [])
     };
 
     if (factory.getEmployee())
-        $state.go('salePoint');
         if (factory.getEmployee().name)
             $state.go('salePoint');
 
@@ -271,7 +270,7 @@ angular.module('controllers', [])
     }
 })
 
-.controller('ctrlUser', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
+/*.controller('ctrlUser', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
 
     $scope.logout = function () {
         factory.logout();
@@ -291,7 +290,7 @@ angular.module('controllers', [])
 
         });
     }
-})
+})*/
 
 
 .controller('ctrlIndexCC', function ($scope, $state, $window, factory) {
@@ -386,6 +385,11 @@ angular.module('controllers', [])
         factory.deleteOrder(order, index);
         vm.orders.splice(index, 1);
     }
+    
+    function detalle(order) {
+        factory.details(order);
+        vm.details = factory.detailsOrder;
+    }
 })
 /*_________________________________________________________________________________________________________*/
 .controller('ctrlOrderManager', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
@@ -400,38 +404,40 @@ angular.module('controllers', [])
     $scope.data = {};
     $scope.drugstore = {};
     $scope.itemValue = [];
+    //load();
+    /*factory.getDrugstoreFromWS(function(res){
+        console.log(res);
+       vm.medicines = res; 
+    });*/
+    
+    
     factory.getDrugstoreFromWS().then(function(res) {
         var drugstores = res.data;
         angular.forEach(drugstores, function(drugstore){
-                if (drugstore.id) {
-                    factory.getMedicines(drugstore.id).then(function (resp)
-                        {                    
-                            angular.forEach(resp.data, 
-                            function(medicine)
-                            {
-                                Object.prototype.push = function( key, value ){
-                                                             this[ key ] = value;
-                                                             //console.log( this );
-                                                             return this;
-                                                        }
-                               //medicine.push( "drugstore_id", drugstore.id );                                
-                               // medicine.push( "drugstore_name", drugstore.name );
-                                vm.medicines.push(medicine);
-                            })
+            factory.getMedicines(drugstore.id).then(function (resp){                    
+                angular.forEach(resp.data, 
+                function(medicine)
+                {
+                    Object.prototype.push = function( key, value ){
+                                                 this[ key ] = value;
+                                                 //console.log( this );
+                                                 return this;
+                                            }
+                    vm.medicines.push(medicine);
+                })
 
-                        });
-                } else
-                    $state.go('index');
-              
-            });
+            });              
+        });
     });
+    
     factory.getDrugstoreFromWS().then(function(res) 
     {
         $scope.data.DrugstoreTypes = res.data;
     });
     $scope.logout = function () {
-        factory.logout();
-        $state.go('index');
+        //factory.logout();
+        //$state.go('index');
+        console.log(vm.medicines);
     }
 
     $scope.goAdmin = function () {
@@ -499,7 +505,7 @@ angular.module('controllers', [])
                     //totalAmount, isCanceled, dateEmited, client_id, operator_id, medicines,drugstore_id
                     factory.createOrder(total,false, dateNow, $scope.client.id, $scope.operator.id, medicines, type.id).then(function(salida)
                         {    
-                            //console.log(salida);                            
+                            console.log(salida);                            
                             vm.listmedicine = [];
                             $scope.client = {};
                             $scope.itemValue = [];
@@ -520,6 +526,14 @@ angular.module('controllers', [])
         DTColumnDefBuilder.newColumnDef(1),
         DTColumnDefBuilder.newColumnDef(2),
         DTColumnDefBuilder.newColumnDef(3),
+        DTColumnDefBuilder.newColumnDef(4)
+    ];
+    
+    vm.dtColumnDefs1 = [
+        DTColumnDefBuilder.newColumnDef(0),
+        DTColumnDefBuilder.newColumnDef(1),
+        DTColumnDefBuilder.newColumnDef(2),
+        DTColumnDefBuilder.newColumnDef(3),
         DTColumnDefBuilder.newColumnDef(4),
         DTColumnDefBuilder.newColumnDef(5)
     ];
@@ -536,9 +550,5 @@ angular.module('controllers', [])
 
     function removeMedicine(index, medicine) {
         vm.listmedicine.splice(index, 1);
-    }
-    function detalle(order) {
-        factory.details(order);
-        vm.details = factory.detailsOrder;
     }
 })

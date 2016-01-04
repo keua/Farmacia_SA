@@ -34,6 +34,29 @@ module.exports = {
             return res.send(200, medicines);
         });
     },
+    
+    getAllDrugstoreMedicine: function (req, res, next) {
+        
+        req.models.drugstore.find(function(err, data){
+            data.forEach(function(drugstore){
+                drugstore.getMedicines(function(res, medicines){
+                    drugstore.medicines = medicines;
+                    console.log(medicines);
+                })
+            });
+            return res.send(data);
+        });
+        
+        /*req.models.drugstore(req.params.id).getMedicines(function (err, medicines) {
+            if (err) {
+                if (Array.isArray(err))
+                    return res.send(200, err);
+                else
+                    return next(err);
+            }
+            return res.send(200, medicines);
+        });*/
+    },
 
     updateDrugstoreMedicine: function (req, res, next) {
         var params = _.pick(req.body, 'quantity', 'PriceUnit');

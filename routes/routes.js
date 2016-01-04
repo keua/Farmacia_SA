@@ -61,6 +61,8 @@ app.put('/Drugstore/:id', controllers.drugstore.updateDrugstore);
 */
 app.post('/DrugstoreMedicine', controllers.drugstore_medicine.addMedicine);
 
+app.get('/DrugstoreMedicine', controllers.drugstore_medicine.getAllDrugstoreMedicine);
+
 app.get('/DrugstoreMedicine/:id', controllers.drugstore_medicine.getDrugstoreMedicine);
 
 app.delete('/DrugstoreMedicine/:drugstore_id/:medicine_id', controllers.drugstore_medicine.deleteDrugstoreMedicine);

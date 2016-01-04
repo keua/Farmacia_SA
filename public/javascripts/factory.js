@@ -8,6 +8,7 @@ angular.module('factories', [])
     comun.drugstore = {};
     comun.orders = [];
     comun.detailsOrder = [];
+    comun.listDrugstore = [];
 
     comun.login = function (data, callback) {
         return $http.get('/Employee/' + data.user + '/' + data.pass)
@@ -25,6 +26,13 @@ angular.module('factories', [])
             .success(function (res) {
                 angular.copy(res, comun.medicines);
                 return comun.medicines;
+            });
+    }
+    
+    comun.getMedicinesCallback = function (drugstore_id, callback) {
+        return $http.get('/DrugstoreMedicine/' + drugstore_id)
+            .success(function (res) {
+                callback(res);
             });
     }
 
@@ -102,6 +110,7 @@ angular.module('factories', [])
     
     /*CREAR FACTURAS*/
     comun.createBill = function (mount, client_id, employee_id, drugstore_id, medicines, payments) {
+        console.log(employee_id);
         var body = {
             mount: mount,
             client_id: client_id,
@@ -119,13 +128,19 @@ angular.module('factories', [])
     
 
     /*OBTENER Sucursales*/
-    comun.getDrugstoreFromWS = function () {
+    comun.getDrugstoreFromWS = function (callback) {
         return $http.get('/Drugstore')
-            .success(function (res) 
-            {
+            .success(function (res){
+                /*angular.forEach(res, function(drugstore){
+                    comun.getMedicines(drugstore.id).then(function(medicines){
+                        angular.copy(comun.medicines, comun.listDrugstore);  
+                    });
+                });*/
                 return res;
             });
     }
+    
+    
     /*CREAR PEDIDOS*/
     comun.createOrder = function (totalAmount, isCanceled, dateEmited, client_id, operator_id, medicines,drugstore_id) {
         var body = {
