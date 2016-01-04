@@ -88,7 +88,6 @@ function addMedicines(req, res, next, drugstore, bill, medicines) {
                 }
                 if (med[0]) {
                     difference = med[0].extra.quantity - medicine.quantity;
-                    console.log(difference)
                     if (difference < 0) {
                         difference = 0;
                         medicine.quantity = med[0].extra.quantity;

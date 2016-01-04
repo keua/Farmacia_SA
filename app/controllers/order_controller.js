@@ -322,6 +322,7 @@ module.exports = {
     */
 function addMedicines(req, res, next, drugstore, order, medicines) {
     var params = {};
+    console.log(medicines);
     var difference = 0;
     medicines.forEach(function (medicine) {
         drugstore.getMedicines({
@@ -333,6 +334,7 @@ function addMedicines(req, res, next, drugstore, order, medicines) {
                 else
                     return next(err);
             }
+            console.log(med[0])
             if (med[0]) {
                 difference = med[0].extra.quantity - medicine.quantity;
                 if (difference < 0) {

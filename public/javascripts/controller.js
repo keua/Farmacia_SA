@@ -304,14 +304,14 @@ angular.module('controllers', [])
 
     if (factory.getEmployee())
         if (factory.getEmployee().name)
-            $state.go('homeCC');
+            $state.go('orderManager');
 
     $scope.login = function () {
         if (!$scope.data.name)
             $window.alert('llene los campos');
         else {
             factory.loginCC($scope.data.name, function (res) {
-                if (res) $state.go('homeCC');
+                if (res) $state.go('orderManager');
                 else
                     $window.alert('Crendenciales incorrectas');
             });
@@ -344,7 +344,7 @@ angular.module('controllers', [])
 
         $scope.logout = function () {
             factory.logout();
-            $state.go('index');
+            $state.go('indexCC');
         }
 
         $scope.createClient = function () {
@@ -435,13 +435,8 @@ angular.module('controllers', [])
             $scope.data.DrugstoreTypes = res.data;
         });
         $scope.logout = function () {
-            //factory.logout();
-            //$state.go('index');
-            console.log(vm.medicines);
-        }
-
-        $scope.goAdmin = function () {
-            $state.go('admin');
+            factory.logout();
+            $state.go('indexCC');
         }
 
         $scope.findClient = function () {
