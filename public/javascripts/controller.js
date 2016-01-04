@@ -142,11 +142,20 @@ angular.module('controllers', [])
     }
 
     function cleanMount() {
+        printIt()
         vm.listmedicine = [];
         $scope.client = {};
         $scope.itemValue = [];
         $scope.data.total = 0;
         $scope.data.surcharge = 0;
+    }
+
+    function printIt() {
+        var Detail = document.getElementById('Detail').innerHTML;
+        var myWindow = $window.open('', '', 'width=800, height=600');
+        myWindow.document.write(Detail);
+        console.log(myWindow.document);
+        myWindow.print();
     }
 
     //*****************************************************************************************************
