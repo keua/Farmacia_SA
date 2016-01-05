@@ -29,11 +29,6 @@ angular.module('factories', [])
 		//var pl = new SOAPClientParameters();
 		//SOAPClient.invoke(base_url, "consultar_clientes", pl, true, HelloWorld_callBack);
     }
-    
-    function HelloWorld_callBack(r)
-	{
-		console.log(r);
-	}
 
     comun.login = function (data, callback) {
         return $http.get('/Employee/' + data.user + '/' + data.pass)
