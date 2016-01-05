@@ -32,11 +32,6 @@ angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatab
             templateUrl: 'views/UserRegister.html',
             controller: 'ctrlUser as ShowCaseUser'
         })
-        .state('homeCC', {
-            url: '/homeCC',
-            templateUrl: 'views/HomeCC.html',
-            controller: 'ctrlHomeCC as homecc'
-        })
         .state('Order', {
             url: '/Order',
             templateUrl: 'views/Order.html',

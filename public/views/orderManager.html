@@ -24,6 +24,7 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Descripcion</th>
+                                    <th>Farmacia</th>
                                     <th>Precio Unitario</th>
                                     <th>Cantidad Stock</th>
                                     <th>Agregar</th>
@@ -31,8 +32,9 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="medicine in theOrder.medicines">
-                                    <td>{{ medicine.name }}</td>
+                                    <td>{{ medicine.med }}</td>
                                     <td>{{ medicine.description }}</td>
+                                    <td>{{medicine.name}}</td>
                                     <td>{{ medicine.PriceUnit }}</td>
                                     <td>{{ medicine.quantity }}</td>
                                     <td align="center">
@@ -118,7 +120,7 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="medicine in theOrder.listmedicine">
-                                        <td>{{ medicine.name }}</td>
+                                        <td>{{ medicine.med }}</td>
                                         <td>{{ medicine.description }}</td>
                                         <td>{{ medicine.PriceUnit }}</td>
                                         <td>

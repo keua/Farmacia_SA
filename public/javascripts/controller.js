@@ -30,17 +30,22 @@ angular.module('controllers', [])
 
     var vm = this;
     var drugstore = factory.getDrugstore();
+    var employee = factory.getEmployee();
 
     vm.medicines = [];
     vm.listmedicine = [];
+    
+    factory.getEmployee(function(res){
+        $scope.employee = res;
+    });
 
-    $scope.employee = factory.getEmployee();
-    $scope.drugstore = factory.getDrugstore();;
+    $scope.employee  = employee;
+    $scope.drugstore = drugstore;
     $scope.client = {};
     $scope.data = {};
     $scope.itemValue = [];
 
-    if ($scope.drugstore.id && $scope.employee.name) {
+    if (drugstore.id) {
         factory.getMedicines(drugstore.id);
         vm.medicines = factory.medicines;
     } else
@@ -272,29 +277,6 @@ angular.module('controllers', [])
     }
 })
 
-/*.controller('ctrlUser', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
-
-    $scope.logout = function () {
-        factory.logout();
-        $state.go('index');
-    }
-
-    $scope.data = {};
-
-    $scope.createClient = function () {
-        factory.createClient($scope.data).then(function (res) {
-            if (res.status == 200 && res.data) {
-                $window.alert('Cliente:  creado satisfactoriamente');
-                $scope.data = {};
-
-            } else
-                $window.alert('Error al crear el nuevo cliente, verifique los datos!!');
-
-        });
-    }
-})*/
-
-
 .controller('ctrlIndexCC', function ($scope, $state, $window, factory) {
 
     $scope.medicines = [];
@@ -318,21 +300,6 @@ angular.module('controllers', [])
         }
     }
 })
-
-.controller('ctrlHomeCC', function ($scope, $state, $window, factory) {
-    $scope.operator = factory.getOperator();
-
-    $scope.logout = function () {
-        factory.logoutCC();
-        $state.go('indexCC');
-    }
-
-    if (!$scope.operator.name)
-        $state.go('indexCC');
-
-
-})
-
 .controller('ctrlOrder', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
         var vm = this;
         $scope.data = {};
@@ -368,7 +335,6 @@ angular.module('controllers', [])
         DTColumnDefBuilder.newColumnDef(4),
         DTColumnDefBuilder.newColumnDef(5),
         DTColumnDefBuilder.newColumnDef(6),
-        DTColumnDefBuilder.newColumnDef(7)
     ];
 
         vm.dtColumnDefs1 = [
@@ -389,13 +355,13 @@ angular.module('controllers', [])
         }
 
         function detalle(order) {
-            factory.details(order);
-            vm.details = factory.detailsOrder;
+            factory.details(order, function(res){
+                vm.details = res;                
+            });
         }
     })
     /*_________________________________________________________________________________________________________*/
     .controller('ctrlOrderManager', function ($scope, $state, $window, factory, DTOptionsBuilder, DTColumnDefBuilder) {
-
         var vm = this;
 
         vm.medicines = [];
@@ -406,29 +372,9 @@ angular.module('controllers', [])
         $scope.data = {};
         $scope.drugstore = {};
         $scope.itemValue = [];
-        //load();
-        /*factory.getDrugstoreFromWS(function(res){
-            console.log(res);
-           vm.medicines = res; 
-        });*/
-
-
+    
         factory.getDrugstoreFromWS().then(function (res) {
-            var drugstores = res.data;
-            angular.forEach(drugstores, function (drugstore) {
-                factory.getMedicines(drugstore.id).then(function (resp) {
-                    angular.forEach(resp.data,
-                        function (medicine) {
-                            Object.prototype.push = function (key, value) {
-                                this[key] = value;
-                                //console.log( this );
-                                return this;
-                            }
-                            vm.medicines.push(medicine);
-                        })
-
-                });
-            });
+            vm.medicines = res.data;
         });
 
         factory.getDrugstoreFromWS().then(function (res) {
@@ -482,7 +428,7 @@ angular.module('controllers', [])
                     aux = listmedicine[i];
                     total += item * aux.PriceUnit;
                     medicines.push({
-                        medicine_id: aux.id,
+                        medicine_id: aux.medicines_id,
                         quantity: item
                     });
                     i++;
@@ -491,7 +437,7 @@ angular.module('controllers', [])
                     if (fine) {
                         var dateNow = new Date(); ///.format('yyyy-MM-dd');//$filter('date')(new Date(), 'yyyy-MM-dd');
                         //totalAmount, isCanceled, dateEmited, client_id, operator_id, medicines,drugstore_id
-                        factory.createOrder(total, false, dateNow, $scope.client.id, $scope.operator.id, medicines, type.id).then(function (salida) {
+                        factory.createOrder(total, false, dateNow, $scope.client.id, $scope.operator.id, medicines, type.drugstore_id).then(function (salida) {
                             console.log(salida);
                             vm.listmedicine = [];
                             $scope.client = {};
@@ -503,7 +449,6 @@ angular.module('controllers', [])
                     $window.alert('El monto del pedido no supera la cantidad de 1.00!!');
             } else
                 $window.alert('Debe ingresar un cliente para generar el pedido!!!');
-
         }
 
         //*****************************************************************************************************
@@ -525,17 +470,17 @@ angular.module('controllers', [])
         DTColumnDefBuilder.newColumnDef(5)
     ];
 
-        //Definition of functions for salePoint view actions
-        vm.addMedicine = addMedicine;
-        vm.removeMedicine = removeMedicine;
+    //Definition of functions for salePoint view actions
+    vm.addMedicine = addMedicine;
+    vm.removeMedicine = removeMedicine;
 
-        function addMedicine(medicine) {
-            var indice = vm.listmedicine.indexOf(medicine);
-            if (indice == -1)
-                vm.listmedicine.push(medicine);
-        }
+    function addMedicine(medicine) {
+        var indice = vm.listmedicine.indexOf(medicine);
+        if (indice == -1)
+            vm.listmedicine.push(medicine);
+    }
 
-        function removeMedicine(index, medicine) {
-            vm.listmedicine.splice(index, 1);
-        }
+    function removeMedicine(index, medicine) {
+        vm.listmedicine.splice(index, 1);
+    }
     })

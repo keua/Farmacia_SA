@@ -36,26 +36,11 @@ module.exports = {
     },
 
     getAllDrugstoreMedicine: function (req, res, next) {
-
-        req.models.drugstore.find(function (err, data) {
-            data.forEach(function (drugstore) {
-                drugstore.getMedicines(function (res, medicines) {
-                    drugstore.medicines = medicines;
-                    console.log(medicines);
-                })
-            });
-            return res.send(data);
+        req.db.driver.execQuery("select dg.medicines_id, dg.drugstore_id, dg.quantity, dg.PriceUnit, m.name med, d.name, m.description from drugstore_medicines dg, medicine m, drugstore d where dg.drugstore_id = d.id and dg.medicines_id = m.id", function (err, data) {
+            if (err)
+                next(err);
+            res.send(200, data);
         });
-
-        /*req.models.drugstore(req.params.id).getMedicines(function (err, medicines) {
-            if (err) {
-                if (Array.isArray(err))
-                    return res.send(200, err);
-                else
-                    return next(err);
-            }
-            return res.send(200, medicines);
-        });*/
     },
 
     updateDrugstoreMedicine: function (req, res, next) {

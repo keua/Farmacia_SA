@@ -4,7 +4,7 @@ module.exports = {
         createOrder: function (req, res, next) {
             var params = _.pick(req.body, 'totalAmount', 'isCanceled', 'dateEmited', 'client_id', 'operator_id', 'drugstore_id');
             var otherParams = _.pick(req.body, 'medicines', 'drugstore_id');
-            params.date = new Date();
+            params.date = new Date();            
 
             req.models.order.create(params, function (err, order) {
                 if (err) {
@@ -13,8 +13,7 @@ module.exports = {
                     else
                         return next(err);
                 }
-
-                req.models.drugstore.get(otherParams.drugstore_id, function (err, drugstore) {
+                req.models.drugstore.get(otherParams.drugstore_id, function (err, drugstore) {                    
                     if (err) {
                         if (err.code == orm.ErrorCodes.NOT_FOUND)
                             res.send(404, "Drugstore not found");
@@ -102,53 +101,15 @@ module.exports = {
 
 
         getAllOrder: function (req, res, next) {
-            req.models.order.find({}, function (err, order) {
-                if (err) {
-                    if (err.code == orm.ErrorCodes.NOT_FOUND)
-                        res.send(404, "Client not found");
-                    else
-                        return next(err);
-                }
-
-
-                order.forEach(function (order) {
-                    if (err) {
-                        if (err.code == orm.ErrorCodes.NOT_FOUND)
-                            res.send(404, "oder not found");
-                        else
-                            return next(err);
-                    }
-                    if (order) {
-                        req.models.drugstore.get(order.drugstore_id, function (err, drugstore) {
-                            if (err) {
-                                if (err.code == orm.ErrorCodes.NOT_FOUND)
-                                    res.send(404, "Medicines not found in the Order");
-                                else
-                                    return next(err);
-                            }
-                            req.models.client.get(order.client_id, function (err, client) {
-                                if (err) {
-                                    if (err.code == orm.ErrorCodes.NOT_FOUND)
-                                        res.send(404, "Medicines not found in the Order");
-                                    else
-                                        return next(err);
-                                }
-                                order.drugstore = drugstore;
-                                order.client = client;
-                            });
-                        });
-
-
-                    } else
-                        res.send(404, 'Order not found 2');
-
-                });
-                res.send(200, order);
-            });
-        }
-
-
-        ,
+            req.db.driver.execQuery(
+                "select ord.totalAmount, ord.dateEmited, ord.id, ord.operator_id, ord.client_id, c.name as client, o.name as operator from farmacia_db.order ord, client c, operator o where ord.client_id = c.id and ord.operator_id=o.id;",
+                function (err, data) {
+                    if (err)
+                        next(err);
+                    res.send(data);
+                })
+        },
+    
         getOrder: function (req, res, next) {
             req.models.order.get(req.params.id, function (err, order) {
                 if (err) {
@@ -322,7 +283,6 @@ module.exports = {
     */
 function addMedicines(req, res, next, drugstore, order, medicines) {
     var params = {};
-    console.log(medicines);
     var difference = 0;
     medicines.forEach(function (medicine) {
         drugstore.getMedicines({
@@ -334,7 +294,6 @@ function addMedicines(req, res, next, drugstore, order, medicines) {
                 else
                     return next(err);
             }
-            console.log(med[0])
             if (med[0]) {
                 difference = med[0].extra.quantity - medicine.quantity;
                 if (difference < 0) {

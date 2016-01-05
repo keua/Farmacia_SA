@@ -25,7 +25,6 @@
                                     <th>No. Orden</th>
                                     <th>Cliente</th>
                                     <th>Generado por</th>
-                                    <th>Sucursal</th>
                                     <th>Fecha</th>
                                     <th>Total</th>
                                     <th>Detalle</th>
@@ -35,9 +34,8 @@
                             <tbody>
                                 <tr ng-repeat="ord in order.orders">
                                     <td>{{ ord.id }}</td>
-                                    <td>{{ ord.client.name }}</td>
-                                    <td>{{ ord.operator_id }}</td>
-                                    <td>{{ ord.drugstore.name }}</td>
+                                    <td>{{ ord.client }}</td>
+                                    <td>{{ ord.operator }}</td>
                                     <td>{{ ord.dateEmited }}</td>
                                     <td>{{ ord.totalAmount }}</td>
                                     <td>

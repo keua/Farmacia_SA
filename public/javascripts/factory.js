@@ -7,7 +7,6 @@ angular.module('factories', [])
     comun.operator = {};
     comun.drugstore = {};
     comun.orders = [];
-    comun.detailsOrder = [];
     comun.listDrugstore = [];
 
     comun.login = function (data, callback) {
@@ -61,8 +60,8 @@ angular.module('factories', [])
     }
 
     /*OBTENER EMPLEADO, DESLOGUEO Y FARMACIA*/
-    comun.getEmployee = function () {
-        if (!comun.employee) {
+    comun.getEmployee = function (callback) {
+        if (!comun.employee.name) {
             comun.employee = localStorageService.get('employee');
             return comun.employee;
         } else
@@ -130,13 +129,8 @@ angular.module('factories', [])
 
     /*OBTENER Sucursales*/
     comun.getDrugstoreFromWS = function (callback) {
-        return $http.get('/Drugstore')
+        return $http.get('/DrugstoreMedicine')
             .success(function (res) {
-                /*angular.forEach(res, function(drugstore){
-                    comun.getMedicines(drugstore.id).then(function(medicines){
-                        angular.copy(comun.medicines, comun.listDrugstore);  
-                    });
-                });*/
                 return res;
             });
     }
@@ -189,13 +183,10 @@ angular.module('factories', [])
             });
     }
 
-    comun.details = function (order) {
-        comun.detailsOrder = [];
+    comun.details = function (order, callback) {
         return $http.get('/OrderMedicines/' + order.id)
             .success(function (res) {
-
-                angular.copy(res, comun.detailsOrder);
-                return comun.detailsOrder;
+                return callback(res);
             });
     }
     return comun;
