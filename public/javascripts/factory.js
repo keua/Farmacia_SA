@@ -1,13 +1,39 @@
 angular.module('factories', [])
 
-.factory('factory', function ($http, localStorageService) {
+.factory('factory', function ($http, localStorageService, $soap) {
     var comun = {};
     comun.medicines = [];
     comun.employee = {};
     comun.operator = {};
     comun.drugstore = {};
     comun.orders = [];
-    comun.listDrugstore = [];
+    comun.listDrugstore = [];  
+    
+    comun.soap = function(){
+        //var base_url = "http://186.151.68.73:8080/Service1.asmx";
+        //var base_url1 = "http://www.webservicex.net/BibleWebservice.asmx";
+        //var soapParams = new SOAPClientParameters();
+        
+        //var base_url = "http://192.168.43.:8080/";
+        
+        /*$http.get('http://192.168.43.161:8000/productos-ws')
+            .success(function(res){
+                    console.log(res);            
+            })
+            .error(function(res){
+                console.log(res);
+        });*/
+        
+        //console.log($soap.post(base_url1,"GetBookTitles"));
+        //console.log($soap.post(base_url,"consultar_clientes"));
+		//var pl = new SOAPClientParameters();
+		//SOAPClient.invoke(base_url, "consultar_clientes", pl, true, HelloWorld_callBack);
+    }
+    
+    function HelloWorld_callBack(r)
+	{
+		console.log(r);
+	}
 
     comun.login = function (data, callback) {
         return $http.get('/Employee/' + data.user + '/' + data.pass)

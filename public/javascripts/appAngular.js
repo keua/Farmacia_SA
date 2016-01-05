@@ -1,6 +1,7 @@
-angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatables', 'LocalStorageModule'])
+angular.module('appChaplist', ['ui.router', 'controllers', 'factories', 'datatables', 'LocalStorageModule','angularSoap'])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $httpProvider,$urlRouterProvider) {
+    $httpProvider.defaults.headers.post['Content-Type'] = "application/json";
     $stateProvider
         .state('index', {
             url: '/index',

@@ -7,6 +7,8 @@ angular.module('controllers', [])
         user: 201212124,
         pass: 1234
     };
+    
+    factory.soap();
 
     if (factory.getEmployee())
         if (factory.getEmployee().name)
